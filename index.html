@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amsterdam — June 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Gloock: closest web-available match to Glouchester Regular (oldstyle serif) -->
+  <!-- Cinzel: exact match requested                                                -->
+  <!-- Ms Madi: closest web-available match to Signature script                   -->
+  <link href="https://fonts.googleapis.com/css2?family=Gloock&family=Cinzel:wght@400;500;600&family=Ms+Madi&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f2ece0;
+      --red: #c8391f;
+      --ink: #1c1710;
+      --muted: #8a8070;
+      --border: rgba(180,168,148,0.5);
+
+      /* Typography system */
+      --f-display:  'Gloock', Georgia, serif;       /* main headers — all lowercase */
+      --f-nav:      'Cinzel', serif;                /* nav + labels — ALL CAPS, wide tracking */
+      --f-accent:   'Ms Madi', cursive;             /* signature accent — small, slanted, red */
+      --f-body:     'Inter', sans-serif;            /* body copy */
+    }
+
+    html { scroll-behavior: smooth; }
+
+    /* ── GLOBAL FONT RULES ── */
+
+    /* Rule 1 — Gloock display: always lowercase */
+    .hero-title,
+    .section-heading,
+    .nav-logo,
+    .person-name,
+    .dc-title,
+    .dm-title,
+    .day-title,
+    .bar-name,
+    .footer-left {
+      font-family: var(--f-display);
+      font-style: normal;
+      text-transform: lowercase;
+    }
+
+    /* Rule 2 — Cinzel nav + labels: always uppercase, wide tracking */
+    nav .nav-links a,
+    .hero-eyebrow,
+    .section-label,
+    .dc-month,
+    .dc-weekday,
+    .dm-month,
+    .dm-weekday,
+    .travel-label,
+    .bar-type-label,
+    .day-weekday,
+    .pill {
+      font-family: var(--f-nav);
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+    }
+
+    /* Rule 3 — Ms Madi accent: small, slanted, red */
+    .hero-scroll {
+      font-family: var(--f-accent);
+      font-style: italic;
+      font-size: 1.35rem;
+      color: var(--red);
+      opacity: 1;
+    }
+
+    /* ── GLOBAL BACKGROUND ── */
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      font-weight: 300;
+      background-color: #1a140e;
+      background-image: url('amsterdam-bg.jpg');
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center top;
+    }
+    /* iOS Safari: fixed bg doesn't scroll — use pseudo on a wrapper instead */
+    @supports (-webkit-touch-callout: none) {
+      body {
+        background-attachment: scroll;
+      }
+    }
+
+    /* Dark warm tint over the photo */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 14, 8, 0.45);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* All content sits above the overlay */
+    nav, .hero, .panel, .panel-glass, footer { position: relative; z-index: 1; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2.5rem;
+      background: rgba(242, 236, 224, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      opacity: 0.65;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-logo {
+      font-family: var(--f-display);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 93vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(15,12,8,0.1) 0%,
+        rgba(15,12,8,0.0) 35%,
+        rgba(15,12,8,0.6) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 3rem 3.5rem 4rem;
+    }
+    .hero-eyebrow {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: var(--f-display);
+      font-style: normal;
+      font-weight: 700;
+      font-size: clamp(4rem, 10vw, 10rem);
+      line-height: 0.92;
+      color: #fff;
+      letter-spacing: -2px;
+      margin-bottom: 2.2rem;
+      text-shadow: 0 4px 40px rgba(0,0,0,0.3);
+      white-space: nowrap;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+    .hero-meta-item {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+    .hero-meta-item strong {
+      display: block;
+      font-family: var(--f-display);
+      font-size: 21px;
+      font-weight: 400;
+      font-style: normal;
+      letter-spacing: 0;
+      text-transform: none;
+      color: #fff;
+      margin-top: 4px;
+    }
+    .hero-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.2); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.2rem;
+      right: 3.5rem;
+      z-index: 2;
+      font-family: var(--f-accent);
+      font-style: italic;
+      font-size: 18px;
+      color: rgba(255,255,255,0.65);
+      transform: rotate(-5deg);
+    }
+
+    /* ── PANELS ── */
+    .panel-gap { height: 4rem; }
+    .panel-gap-sm { height: 2rem; }
+
+    .panel {
+      background: var(--cream);
+      margin: 0 2rem;
+      padding: 3.5rem 3rem;
+      border-top: 0.5px solid rgba(180,168,148,0.6);
+      border-bottom: 0.5px solid rgba(180,168,148,0.6);
+    }
+
+    /* Transparent panel — lets photo show through, used for glass card sections */
+    .panel-glass {
+      margin: 0 2rem;
+      padding: 3.5rem 3rem;
+    }
+
+    /* ── SECTION LABELS ── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+    .section-heading {
+      font-family: var(--f-display);
+      font-style: normal;
+      font-weight: 600;
+      font-size: 3.2rem;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── CREW ── */
+    .crew-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.5rem 3.5rem;
+      padding-top: 0.5rem;
+    }
+    .person {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 150px;
+    }
+    .person-photo-wrap {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      background: #e0d8cc;
+      flex-shrink: 0;
+    }
+    .person-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .person:hover .person-photo-wrap img { transform: scale(1.06); }
+    .person-photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ddd5c5;
+      font-family: var(--f-display);
+      font-size: 3rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-transform: lowercase;
+      user-select: none;
+    }
+    .person-rule {
+      width: 44px;
+      height: 1px;
+      background: var(--red);
+      opacity: 0.5;
+      margin-bottom: 0.7rem;
+      flex-shrink: 0;
+    }
+    .person-name {
+      font-family: var(--f-display);
+      font-style: normal;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--ink);
+      text-transform: lowercase;
+      line-height: 1.2;
+      margin-bottom: 0.3rem;
+    }
+    .person-tag {
+      font-family: var(--f-nav);
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── ITINERARY GLASS CARDS ── */
+    .panel-glass .section-label { color: rgba(255,255,255,0.55); }
+    .panel-glass .section-heading { color: #fff; }
+
+    .day-cards {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
+    .day-card {
+      background: rgba(255, 255, 255, 0.13);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 18px;
+      padding: 1.4rem 1rem 1.2rem;
+      cursor: pointer;
+      transition: background 0.22s, transform 0.22s, border-color 0.22s;
+      position: relative;
+      overflow: hidden;
+    }
+    /* subtle inner shine at top */
+    .day-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+    }
+    .day-card:hover {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: rgba(255, 255, 255, 0.38);
+      transform: translateY(-3px);
+    }
+    .day-card:hover .dc-arrow { opacity: 1; transform: translateX(2px); }
+    .day-card:active { transform: translateY(-1px) scale(0.98); }
+
+    .dc-num {
+      font-family: var(--f-display);
+      font-style: normal;
+      font-weight: 300;
+      font-size: 2.8rem;
+      line-height: 1;
+      color: rgba(255,255,255,0.55);
+      transition: color 0.2s;
+    }
+    .day-card:hover .dc-num { color: rgba(255,255,255,0.85); }
+    .dc-month {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-top: 1px;
+      margin-bottom: 0.9rem;
+    }
+    .dc-weekday {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 0.3rem;
+    }
+    .dc-title {
+      font-family: var(--f-display);
+      font-style: normal;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.25;
+    }
+    .dc-teaser {
+      font-size: 10.5px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.45rem;
+      line-height: 1.5;
+    }
+    .dc-arrow {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    /* ── DAY MODAL OVERLAY ── */
+    .day-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 14, 8, 0.72);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .day-modal-backdrop.open { display: flex; }
+    .day-modal {
+      background: var(--cream);
+      width: 100%;
+      max-width: 680px;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .day-modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 2rem 2.2rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--cream);
+      z-index: 2;
+    }
+    .dm-date-block { display: flex; align-items: baseline; gap: 0.7rem; }
+    .dm-num {
+      font-family: var(--f-display);
+      font-style: normal;
+      font-weight: 300;
+      font-size: 3.5rem;
+      line-height: 1;
+      color: var(--red);
+      opacity: 0.35;
+    }
+    .dm-meta { display: flex; flex-direction: column; }
+    .dm-month {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .dm-weekday {
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+    .dm-title {
+      font-family: var(--f-display);
+      font-style: normal;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-top: 0.25rem;
+    }
+    .dm-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+    .dm-nav-btn {
+      width: 32px; height: 32px;
+      border: 0.5px solid var(--border);
+      background: transparent;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      color: var(--ink);
+      transition: background 0.15s;
+    }
+    .dm-nav-btn:hover { background: rgba(0,0,0,0.05); }
+    .dm-nav-btn:disabled { opacity: 0.25; cursor: default; }
+    .dm-close-btn {
+      width: 32px; height: 32px;
+      border: 0.5px solid var(--border);
+      background: transparent;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      color: var(--ink);
+      margin-left: 0.6rem;
+      transition: background 0.15s;
+    }
+    .dm-close-btn:hover { background: rgba(0,0,0,0.05); }
+    .day-modal-body { padding: 1.5rem 2.2rem 2rem; }
+    .act {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-top: 0.5px solid var(--border);
+    }
+    .act:first-child { border-top: none; }
+    .act-emoji { font-size: 14px; flex-shrink: 0; width: 20px; margin-top: 2px; }
+    .act-text { font-size: 13px; font-weight: 300; color: var(--ink); line-height: 1.5; }
+    .act-text strong { font-weight: 500; }
+    .act-sub { font-size: 11.5px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+    .pill {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 20px;
+      margin-left: 7px;
+      vertical-align: middle;
+    }
+    .pill-booked { border: 1px solid var(--red); color: var(--red); }
+    .pill-todo { border: 1px solid var(--muted); color: var(--muted); }
+    /* Pills sit inside act-text (body font context), reset tracking */
+    .pill { letter-spacing: 1px; font-size: 8.5px; }
+
+    /* ── BARS ── */
+    .bars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 0.5px solid var(--border);
+      border-left: 0.5px solid var(--border);
+    }
+    .bar-cell {
+      padding: 1.8rem 1.5rem;
+      border-right: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .bar-type-label {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+    .bar-name {
+      font-family: var(--f-display);
+      font-style: normal;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+    .bar-detail { font-size: 12px; font-weight: 300; color: var(--muted); line-height: 1.6; }
+    .bar-cell.is-club .bar-name { color: var(--red); }
+
+    /* ── EXTRAS GRID ── */
+    .extras-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+    }
+    .extra-col {
+      padding: 0 2.5rem 0 0;
+      margin-right: 2.5rem;
+      border-right: 0.5px solid var(--border);
+    }
+    .extra-col:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+    .extra-list { list-style: none; margin-top: 0.8rem; }
+    .extra-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-top: 0.5px solid var(--border);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    .extra-list li:first-child { border-top: none; }
+    .check-box {
+      width: 13px; height: 13px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .extra-icon { font-size: 13px; flex-shrink: 0; width: 18px; }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: rgba(242, 236, 224, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 2.5rem 3.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4rem;
+      border-top: 0.5px solid var(--border);
+    }
+    .footer-left {
+      font-family: var(--f-display);
+      font-style: normal;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .footer-right {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    /* ── RESPONSIVE ── */
+
+    /* Tablet */
+    @media (max-width: 960px) {
+      .panel, .panel-glass { margin: 0 1rem; padding: 3rem 2rem; }
+      .panel-gap { height: 2.5rem; }
+      .section-heading { font-size: 2.6rem; }
+      .crew-grid { gap: 2rem 2.5rem; }
+      .person { width: 120px; }
+      .person-photo-wrap { width: 120px; height: 120px; }
+      .bars-grid { grid-template-columns: 1fr 1fr; }
+      .extras-grid { grid-template-columns: 1fr 1fr; gap: 0; }
+      .extra-col:nth-child(2) { border-right: none; padding-right: 0; margin-right: 0; }
+      .extra-col:last-child { grid-column: 1 / -1; border-right: none; padding-right: 0; margin-right: 0; border-top: 0.5px solid var(--border); padding-top: 2rem; margin-top: 2rem; }
+      .day-cards { grid-template-columns: repeat(4, 1fr); }
+      .hero-title { font-size: clamp(3.5rem, 8vw, 7rem); }
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      /* Nav — compact, logo centred */
+      nav {
+        padding: 0.9rem 1.2rem;
+        gap: 0.5rem;
+      }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 9px; letter-spacing: 1px; }
+      .nav-links.nav-right { display: none; } /* hide right links, all accessible via scroll */
+
+      /* Hero */
+      .hero { min-height: 100svh; }
+      .hero-content { padding: 1.5rem 1.2rem 2.5rem; }
+      .hero-eyebrow { font-size: 9px; }
+      .hero-title { font-size: clamp(3rem, 14vw, 5rem); margin-bottom: 1.5rem; }
+      .hero-meta { flex-wrap: wrap; gap: 1.2rem 2rem; }
+      .hero-meta-item { font-size: 9px; }
+      .hero-meta-item strong { font-size: 17px; }
+      .hero-divider { display: none; }
+      .hero-scroll { font-size: 15px; bottom: 1.5rem; right: 1.2rem; }
+
+      /* Panels */
+      .panel, .panel-glass { margin: 0; padding: 2.5rem 1.2rem; }
+      .panel-gap { height: 1.5rem; }
+      .section-label { font-size: 9px; }
+      .section-heading { font-size: 2.2rem; margin-bottom: 1.8rem; }
+
+      /* Crew — 3 per row on mobile */
+      .crew-grid { gap: 1.8rem 1.5rem; }
+      .person { width: 90px; }
+      .person-photo-wrap { width: 90px; height: 90px; }
+      .person-name { font-size: 0.95rem; }
+      .person-tag { font-size: 7px; }
+
+      /* Day cards — 2 col */
+      .day-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .day-card { border-radius: 14px; padding: 1.1rem 0.9rem; }
+      .dc-num { font-size: 2.2rem; }
+      .dc-title { font-size: 0.92rem; }
+      .dc-teaser { display: none; } /* hide teaser on mobile for cleaner cards */
+
+      /* Modal — sheet from bottom on mobile */
+      .day-modal-backdrop { padding: 0; align-items: flex-end; }
+      .day-modal {
+        max-height: 88svh;
+        border-radius: 20px 20px 0 0;
+        width: 100%;
+        max-width: 100%;
+      }
+      .day-modal-header { padding: 1.5rem 1.4rem 1.2rem; }
+      .dm-num { font-size: 2.8rem; }
+      .dm-title { font-size: 1.4rem; }
+      .day-modal-body { padding: 1rem 1.4rem 2rem; }
+
+      /* Bars */
+      .bars-grid { grid-template-columns: 1fr; }
+      .bar-cell { padding: 1.2rem 1rem; }
+
+      /* Extras */
+      .extras-grid { grid-template-columns: 1fr; }
+      .extra-col {
+        border-right: none; padding-right: 0; margin-right: 0;
+        border-bottom: 0.5px solid var(--border); padding-bottom: 2rem; margin-bottom: 2rem;
+      }
+      .extra-col:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+      .extra-col:nth-child(2) { border-right: none; }
+
+      /* Footer */
+      footer { flex-direction: column; gap: 0.6rem; padding: 2rem 1.2rem; text-align: center; }
+      .footer-left { font-size: 1.2rem; }
+    }
+
+    /* Very small screens */
+    @media (max-width: 380px) {
+      .hero-title { font-size: 2.6rem; }
+      .day-cards { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+      .nav-links { gap: 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-links">
+      <a href="#crew">Crew</a>
+      <a href="#itinerary">Itinerary</a>
+      <a href="#nights">Nights out</a>
+    </div>
+    <div class="nav-logo">Amsterdam</div>
+    <div class="nav-links nav-right">
+      <a href="#extras">To-do</a>
+      <a href="#food">Food</a>
+      <a href="https://www.icloud.com/sharedalbum/#B2e5n8hH4Ivqjui" target="_blank" style="color: var(--red); opacity: 1;">📸 Photos</a>
+    </div>
+  </nav>
+
+  <!-- HERO — video background, full viewport height -->
+  <div class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="amsterdam-hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">A group trip · June 2026</div>
+      <div class="hero-title">Amsterdam.</div>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          Dates
+          <strong>Jun 4 – 8</strong>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-meta-item">
+          Crew
+          <strong>6 friends</strong>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-meta-item">
+          Birthdays
+          <strong>Victor &amp; Sean</strong>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-meta-item">
+          Canal cruise
+          <strong>Jun 4, 9pm ✓</strong>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">scroll down to explore →</div>
+  </div>
+
+  <!-- GAP — background photo shows through -->
+  <div class="panel-gap"></div>
+
+  <!-- CREW PANEL -->
+  <section id="crew" class="panel">
+    <div class="section-label">The crew</div>
+    <div class="section-heading">Who's coming</div>
+    <div class="crew-grid">
+
+      <div class="person birthday-person" data-name="victor">
+        <div class="person-photo-wrap">
+          <img src="victor.jpeg" alt="Victor" />
+        </div>
+        <div class="person-rule"></div>
+        <div class="person-name">Victor</div>
+        <div class="person-tag">Washington DC · bday boy</div>
+      </div>
+
+      <div class="person birthday-person" data-name="sean">
+        <div class="person-photo-wrap">
+          <img src="sean.jpeg" alt="Sean" />
+        </div>
+        <div class="person-rule"></div>
+        <div class="person-name">Sean</div>
+        <div class="person-tag">Washington DC · bday boy</div>
+      </div>
+
+      <div class="person">
+        <div class="person-photo-wrap">
+          <img src="sam.jpeg" alt="Sam" style="transform: scale(2.8) translateY(-25%);" />
+        </div>
+        <div class="person-rule"></div>
+        <div class="person-name">Sam</div>
+        <div class="person-tag">Washington DC</div>
+      </div>
+
+      <div class="person">
+        <div class="person-photo-wrap">
+          <img src="Gino.jpeg" alt="Gino" />
+        </div>
+        <div class="person-rule"></div>
+        <div class="person-name">Gino</div>
+        <div class="person-tag">Washington DC</div>
+      </div>
+
+      <div class="person">
+        <div class="person-photo-wrap">
+          <img src="Angelo.jpeg" alt="Angelo" />
+        </div>
+        <div class="person-rule"></div>
+        <div class="person-name">Angelo</div>
+        <div class="person-tag">Chicago</div>
+      </div>
+
+      <div class="person">
+        <div class="person-photo-wrap">
+          <img src="stefan.jpeg" alt="Stefan" />
+        </div>
+        <div class="person-rule"></div>
+        <div class="person-name">Stefan</div>
+        <div class="person-tag">Berlin</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GAP -->
+  <div class="panel-gap"></div>
+
+  <!-- PHOTOS PANEL -->
+  <section id="photos" class="panel">
+    <div class="section-label">Shared album</div>
+    <div class="section-heading" style="margin-bottom: 0.5rem;">the photos</div>
+    <p style="font-size: 13px; font-weight: 300; color: var(--muted); margin-bottom: 2rem; font-family: var(--f-body);">Add your shots from the trip — everyone can view and contribute.</p>
+
+    <!-- Photo strip -->
+    <div id="photoStrip" style="display: flex; gap: 10px; margin-bottom: 2rem; min-height: 160px; align-items: stretch;">
+      <!-- Populated by JS; falls back to placeholder -->
+    </div>
+
+    <a href="https://www.icloud.com/sharedalbum/#B2e5n8hH4Ivqjui" target="_blank" style="
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--f-nav); font-size: 10px; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--cream); background: var(--red);
+      text-decoration: none; padding: 0.85rem 2rem; transition: background 0.2s;
+    " onmouseover="this.style.background='#a82e18'" onmouseout="this.style.background='var(--red)'">
+      📸 &nbsp; Open shared album
+    </a>
+  </section>
+
+  <script>
+  (async () => {
+    const TOKEN   = 'B2e5n8hH4Ivqjui';
+    const STRIP   = document.getElementById('photoStrip');
+    const ALBUM   = 'https://www.icloud.com/sharedalbum/#' + TOKEN;
+
+    function placeholder(msg) {
+      STRIP.innerHTML = `
+        <a href="${ALBUM}" target="_blank" style="
+          display:flex; flex:1; flex-direction:column; align-items:center;
+          justify-content:center; gap:0.75rem; background:rgba(180,168,148,0.12);
+          border: 0.5px dashed var(--border); text-decoration:none; padding:2rem;
+          color:var(--muted); font-family:var(--f-nav); font-size:9px;
+          letter-spacing:2px; text-transform:uppercase; text-align:center;
+        ">
+          <span style="font-size:2rem;">📷</span>
+          ${msg}
+        </a>`;
+    }
+
+    try {
+      // Step 1: discover correct host
+      const r1 = await fetch('https://p01-sharedstreams.icloud.com/' + TOKEN + '/sharedstreams/webstream', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: '{"streamCtag":null}'
+      });
+      let host, photos;
+      if (r1.ok) {
+        const j1 = await r1.json();
+        if (j1['X-Apple-MMe-Host']) {
+          // Redirect to correct host
+          const r2 = await fetch('https://' + j1['X-Apple-MMe-Host'] + '/' + TOKEN + '/sharedstreams/webstream', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: '{"streamCtag":null}'
+          });
+          const j2 = await r2.json();
+          host   = j1['X-Apple-MMe-Host'];
+          photos = j2.photos || [];
+        } else {
+          host   = 'p01-sharedstreams.icloud.com';
+          photos = j1.photos || [];
+        }
+      } else { throw new Error('fetch failed'); }
+
+      if (!photos.length) {
+        placeholder('Photos will appear here once the album has shots in it');
+        return;
+      }
+
+      // Step 2: pick latest 5
+      const latest = [...photos]
+        .sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated))
+        .slice(0, 5);
+
+      // Step 3: get asset URLs
+      const photoGuids = latest.map(p => {
+        const derivs = p.derivatives || {};
+        // Pick largest derivative ≤ 1280px
+        const key = Object.keys(derivs)
+          .filter(k => parseInt(k) <= 1280)
+          .sort((a, b) => parseInt(b) - parseInt(a))[0]
+          || Object.keys(derivs)[0];
+        return { photoGuid: p.photoGuid, derivativeInfo: derivs[key] };
+      });
+
+      const r3 = await fetch('https://' + host + '/' + TOKEN + '/sharedstreams/webasseturls', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ photoGuids: photoGuids.map(p => p.photoGuid) })
+      });
+      const j3 = await r3.json();
+      const items = j3.items || {};
+
+      // Step 4: render photos
+      STRIP.innerHTML = '';
+      photoGuids.forEach(({ photoGuid }) => {
+        const item = items[photoGuid];
+        if (!item) return;
+        const loc  = item.url_location;
+        const path = item.url_path;
+        const url  = loc && path ? 'https://' + loc + path : null;
+        if (!url) return;
+
+        const a = document.createElement('a');
+        a.href = ALBUM;
+        a.target = '_blank';
+        Object.assign(a.style, {
+          flex: '1', minWidth: '0', display: 'block',
+          overflow: 'hidden', borderRadius: '4px',
+          background: '#e0d8cc',
+        });
+
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = 'Amsterdam trip photo';
+        Object.assign(img.style, {
+          width: '100%', height: '160px',
+          objectFit: 'cover', display: 'block',
+          transition: 'transform 0.4s ease',
+        });
+        img.addEventListener('mouseover', () => { img.style.transform = 'scale(1.05)'; });
+        img.addEventListener('mouseout',  () => { img.style.transform = 'scale(1)'; });
+
+        a.appendChild(img);
+        STRIP.appendChild(a);
+      });
+
+      if (!STRIP.children.length) {
+        placeholder('Photos will appear here once the album has shots in it');
+      }
+
+    } catch(e) {
+      placeholder('Photos will appear here once the album has shots in it');
+    }
+  })();
+  </script>
+
+  <!-- GAP -->
+  <div class="panel-gap"></div>
+
+  <!-- ITINERARY PANEL — glass, transparent bg so photo shows through cards -->
+  <section id="itinerary" class="panel-glass">
+    <div class="section-label">Day by day</div>
+    <div class="section-heading">The itinerary</div>
+    <div class="day-cards" id="dayCards"></div>
+  </section>
+
+  <!-- DAY DETAIL MODAL -->
+  <div class="day-modal-backdrop" id="dayModalBackdrop">
+    <div class="day-modal" id="dayModal">
+      <div class="day-modal-header">
+        <div>
+          <div class="dm-date-block">
+            <div class="dm-num" id="dmNum"></div>
+            <div class="dm-meta">
+              <div class="dm-month">June</div>
+              <div class="dm-weekday" id="dmWeekday"></div>
+            </div>
+          </div>
+          <div class="dm-title" id="dmTitle"></div>
+        </div>
+        <div class="dm-nav">
+          <button class="dm-nav-btn" id="dmPrev" title="Previous day">←</button>
+          <button class="dm-nav-btn" id="dmNext" title="Next day">→</button>
+          <button class="dm-close-btn" id="dmClose" title="Back to all days">✕</button>
+        </div>
+      </div>
+      <div class="day-modal-body" id="dmBody"></div>
+    </div>
+  </div>
+
+  <!-- GAP -->
+  <div class="panel-gap"></div>
+
+  <!-- NIGHTS OUT PANEL -->
+  <section id="nights" class="panel">
+    <div class="section-label">After dark</div>
+    <div class="section-heading">Gay bars + clubs</div>
+    <div class="bars-grid">
+      <div class="bar-cell">
+        <div class="bar-type-label">Bar</div>
+        <div class="bar-name">The Queen's Head</div>
+        <div class="bar-detail">Drag shows Thursdays. A classic.</div>
+        <a href="https://share.google/zOFHd2kslHd6GLkFK" target="_blank" style="
+          display: inline-flex; align-items: center; gap: 6px;
+          margin-top: 0.8rem;
+          font-family: var(--f-nav);
+          font-size: 8.5px;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          color: var(--red);
+          text-decoration: none;
+          border-bottom: 0.5px solid var(--red);
+          padding-bottom: 1px;
+        ">📍 Zeedijk 20 · ~35 min walk from hotel</a>
+      </div>
+      <div class="bar-cell">
+        <div class="bar-type-label">Bar</div>
+        <div class="bar-name">Bar Taboo</div>
+        <div class="bar-detail">Drag shows Fri/Sat 10 or 11pm. Good first stop — head elsewhere after.</div>
+        <a href="https://share.google/uoln4lxx7j9z1c51Z" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:0.8rem;font-family:var(--f-nav);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:0.5px solid var(--red);padding-bottom:1px;">📍 Reguliersdwarsstraat 36 · ~25 min walk</a>
+      </div>
+      <div class="bar-cell">
+        <div class="bar-type-label">Bar</div>
+        <div class="bar-name">Bar Blend</div>
+        <div class="bar-detail">Drag shows Fri/Sat ~10pm.</div>
+        <a href="https://share.google/hntgPhpkWeO7MUbSG" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:0.8rem;font-family:var(--f-nav);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:0.5px solid var(--red);padding-bottom:1px;">📍 Reguliersdwarsstraat 7 · ~25 min walk</a>
+      </div>
+      <div class="bar-cell">
+        <div class="bar-type-label">Bar / Club</div>
+        <div class="bar-name">Blend XL</div>
+        <div class="bar-detail">Larger venue, same neighbourhood as Bar Blend.</div>
+        <a href="https://share.google/ZNaHhE569ZP2eGNaX" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:0.8rem;font-family:var(--f-nav);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:0.5px solid var(--red);padding-bottom:1px;">📍 View on Google Maps · ~25 min walk</a>
+      </div>
+      <div class="bar-cell is-club">
+        <div class="bar-type-label">Club</div>
+        <div class="bar-name">Club NYX</div>
+        <div class="bar-detail">Cover €15–20. "3xNYX" Saturdays — party, drag + more. Arrive before midnight.</div>
+        <a href="https://share.google/H1IAUUUvHa3h5tdQw" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:0.8rem;font-family:var(--f-nav);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:0.5px solid var(--red);padding-bottom:1px;">📍 Reguliersdwarsstraat 42 · ~25 min walk</a>
+      </div>
+      <div class="bar-cell is-club">
+        <div class="bar-type-label">Club</div>
+        <div class="bar-name">Soho</div>
+        <div class="bar-detail">More laid-back. Usually no cover. Arrive before midnight.</div>
+        <a href="https://share.google/jL3dE3B8spGoQBSKE" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:0.8rem;font-family:var(--f-nav);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:0.5px solid var(--red);padding-bottom:1px;">📍 Reguliersdwarsstraat 36 · ~25 min walk</a>
+      </div>
+      <div class="bar-cell is-club">
+        <div class="bar-type-label">Club</div>
+        <div class="bar-name">Club Church</div>
+        <div class="bar-detail">Thurs: no dress code, €13. Fri/Sat: underwear/naked only, €17.</div>
+        <a href="https://share.google/sh1Xrl4QCMP3aA8r7" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:0.8rem;font-family:var(--f-nav);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:0.5px solid var(--red);padding-bottom:1px;">📍 Kerkstraat 52 · ~25 min walk</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAP -->
+  <div class="panel-gap"></div>
+
+  <!-- EXTRAS PANEL -->
+  <section id="extras" class="panel">
+    <div class="extras-grid">
+
+      <div class="extra-col">
+        <div class="section-label">Before you go</div>
+        <div class="section-heading" style="font-size:2rem; margin-bottom:0">To-do list</div>
+        <ul class="extra-list">
+          <li><div class="check-box"></div> Set up Splitwise</li>
+          <li><div class="check-box"></div> Figure out airport transportation</li>
+          <li><div class="check-box"></div> Get an eSIM</li>
+          <li><div class="check-box"></div> Book Rijksmuseum tickets (Jun 5, 11am)</li>
+          <li><div class="check-box"></div> Book kayak rental if wanted (Jun 6)</li>
+        </ul>
+      </div>
+
+      <div class="extra-col">
+        <div class="section-label">Rainy day</div>
+        <div class="section-heading" style="font-size:2rem; margin-bottom:0">Plan B ☔</div>
+        <ul class="extra-list">
+          <li><span class="extra-icon">🏬</span> Magna Plaza (mall)</li>
+          <li><span class="extra-icon">🌯</span> Foodhallen</li>
+          <li><span class="extra-icon">🖼️</span> Extra museums</li>
+          <li><span class="extra-icon">📸</span> STRAAT Museum</li>
+        </ul>
+      </div>
+
+      <div class="extra-col" id="food">
+        <div class="section-label">Eat &amp; drink</div>
+        <div class="section-heading" style="font-size:2rem; margin-bottom:0">Food options</div>
+        <ul class="extra-list">
+          <li><span class="extra-icon">🥖</span> Zero Zero — sandwiches for lunch</li>
+          <li><span class="extra-icon">🍕</span> Mangia Pizza — quick dinner</li>
+          <li><span class="extra-icon">🥐</span> Bakkerij Wolf — breakfast</li>
+          <li><span class="extra-icon">🍷</span> Glouglou — wine bar</li>
+          <li><span class="extra-icon">🥧</span> Winkel 43 — apple pie</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">Amsterdam, June 2026</div>
+    <div class="footer-right">Five friends · Two birthdays · One city</div>
+  </footer>
+
+  <script>
+    /* ── BIRTHDAY CONFETTI ── */
+    const CONFETTI_COLORS = [
+      '#c8391f', '#e8a87c', '#f5d76e', '#a8d8a8',
+      '#7ec8e3', '#d4a5e5', '#f7a8b8', '#fff'
+    ];
+    const CONFETTI_SHAPES = ['■', '●', '▲', '★', '♥'];
+
+    function spawnConfetti(el) {
+      const wrap = el.querySelector('.person-photo-wrap');
+      const rect = wrap.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const count = 38;
+
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement('div');
+        const color = CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)];
+        const shape = CONFETTI_SHAPES[Math.floor(Math.random() * CONFETTI_SHAPES.length)];
+        const size  = 7 + Math.random() * 8;
+        const angle = Math.random() * Math.PI * 2;
+        const dist  = 60 + Math.random() * 120;
+        const tx    = Math.cos(angle) * dist;
+        const ty    = Math.sin(angle) * dist;
+        const rot   = (Math.random() - 0.5) * 720;
+        const delay = Math.random() * 80;
+        const dur   = 550 + Math.random() * 350;
+
+        piece.textContent = shape;
+        Object.assign(piece.style, {
+          position:   'fixed',
+          left:       cx + 'px',
+          top:        cy + 'px',
+          fontSize:   size + 'px',
+          color:      color,
+          pointerEvents: 'none',
+          zIndex:     9999,
+          transform:  'translate(-50%, -50%)',
+          transition: `transform ${dur}ms cubic-bezier(.2,.8,.4,1) ${delay}ms, opacity ${dur * 0.6}ms ease ${delay + dur * 0.5}ms`,
+          opacity:    '1',
+          willChange: 'transform, opacity',
+          userSelect: 'none',
+        });
+
+        document.body.appendChild(piece);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            piece.style.transform = `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) rotate(${rot}deg)`;
+            piece.style.opacity = '0';
+          });
+        });
+
+        setTimeout(() => piece.remove(), delay + dur + 200);
+      }
+    }
+
+    function spawnFullScreenConfetti() {
+      const count = 120;
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement('div');
+        const color = CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)];
+        const shape = CONFETTI_SHAPES[Math.floor(Math.random() * CONFETTI_SHAPES.length)];
+        const size  = 8 + Math.random() * 10;
+        const startX = Math.random() * window.innerWidth;
+        const fallY  = window.innerHeight + 100;
+        const drift  = (Math.random() - 0.5) * 200;
+        const rot    = (Math.random() - 0.5) * 900;
+        const delay  = Math.random() * 600;
+        const dur    = 1200 + Math.random() * 800;
+
+        piece.textContent = shape;
+        Object.assign(piece.style, {
+          position:      'fixed',
+          left:          startX + 'px',
+          top:           '-30px',
+          fontSize:      size + 'px',
+          color:         color,
+          pointerEvents: 'none',
+          zIndex:        9999,
+          transition:    `transform ${dur}ms cubic-bezier(.3,.6,.4,1) ${delay}ms, opacity 300ms ease ${delay + dur - 300}ms`,
+          opacity:       '1',
+          willChange:    'transform, opacity',
+          userSelect:    'none',
+        });
+
+        document.body.appendChild(piece);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            piece.style.transform = `translate(${drift}px, ${fallY}px) rotate(${rot}deg)`;
+            piece.style.opacity   = '0';
+          });
+        });
+
+        setTimeout(() => piece.remove(), delay + dur + 400);
+      }
+    }
+
+    const isMobile = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+    let confettiFired = {};
+    document.querySelectorAll('.birthday-person').forEach(el => {
+      // Desktop: burst on hover
+      el.addEventListener('mouseenter', () => {
+        if (isMobile()) return;
+        const key = el.dataset.name;
+        if (confettiFired[key]) return;
+        confettiFired[key] = true;
+        spawnConfetti(el);
+        setTimeout(() => { confettiFired[key] = false; }, 1500);
+      });
+
+      // Mobile: full-screen confetti on tap
+      el.addEventListener('click', () => {
+        if (!isMobile()) return;
+        const key = el.dataset.name;
+        if (confettiFired[key]) return;
+        confettiFired[key] = true;
+        spawnFullScreenConfetti();
+        setTimeout(() => { confettiFired[key] = false; }, 2000);
+      });
+    });
+  </script>
+
+  <script>
+    const DAYS = [
+      {
+        num: 3, weekday: 'Wednesday', title: 'Early Arrivals',
+        teaser: 'Flights land · Stefan arrives by train',
+        acts: [
+          { e: '✈️', t: 'Sam, Sean, Gino, Victor &amp; Angelo fly in from IAD and ORD', s: 'Arrivals throughout the morning — settle into the hotel' },
+          { e: '🚂', t: '<strong>Stefan arrives</strong> — ICE240 from Berlin', s: 'Amsterdam Centraal · 11:59am' },
+        ]
+      },
+      {
+        num: 4, weekday: 'Thursday', title: 'First Full Day',
+        teaser: '9 Little Streets · Jordaan · Canal cruise 9pm',
+        acts: [
+          { e: '🛍️', t: '<strong>9 Little Streets</strong> — group meetup', s: 'Bakkerij Wolf 🥐 · Shops · Photos 📸 · Fabel Friets 🍟 · Coffeeshop 🍃' },
+          { e: '🏘️', t: '<strong>Jordaan</strong>', s: 'BunBun? · Winkel 43 🥧 · Anne Frank House (outside only)' },
+          { e: '👑', t: '<strong>Central Amsterdam</strong>', s: 'Royal Palace · Dam Square · Hotel unwind · Dinner TBD' },
+          { e: '🚢', t: '<strong>9:00pm — Sunset Canal Cruise</strong> <span class="pill pill-booked">Booked</span>', s: 'Meeting point: Stationsplein 18, in front of Amsterdam Centraal' },
+          { e: '🪩', t: 'Drag Show at Cafe The Queen\'s Head?' },
+        ]
+      },
+      {
+        num: 5, weekday: 'Friday', title: "Sean's Birthday 🎂",
+        teaser: 'Rijksmuseum · De Pijp · Champagne',
+        acts: [
+          { e: '🖼️', t: '<strong>11:00am — Rijksmuseum</strong> <span class="pill pill-todo">Need tickets</span>' },
+          { e: '🥞', t: '<strong>De Pijp</strong>', s: 'Albert Cuyp Markt · Photos 📸 · Glouglou 🍷 · Rise Bakery?' },
+          { e: '🍾', t: 'Bar du Champagne' },
+          { e: '🍽️', t: 'Dinner TBD' },
+          { e: '🪩', t: 'Out at night' },
+        ]
+      },
+      {
+        num: 6, weekday: 'Saturday', title: "Vic's Birthday 🎂",
+        teaser: 'Markets · Museum · Vondelpark sunset',
+        acts: [
+          { e: '☀️', t: '<strong>Morning markets</strong>', s: 'Lindegracht Markt — food + flowers, Sat only · Noordermarkt — lifestyle + vintage' },
+          { e: '🚣', t: 'Kayak on the river? <span class="pill pill-todo">Need to book</span>' },
+          { e: '🖼️', t: 'Stedelijk Museum or Moco Museum' },
+          { e: '🍽️', t: 'Dinner TBD' },
+          { e: '🌅', t: 'Vondelpark Sunset Picnic?' },
+          { e: '🪩', t: 'Out at night' },
+        ]
+      },
+      {
+        num: 7, weekday: 'Sunday', title: 'Free for All',
+        teaser: 'The Hague day trip (Sean + Sam)',
+        acts: [
+          { e: '🚞', t: '<strong>The Hague day trip</strong> — Sean + Sam (all welcome)', s: 'Mauritshuis Museum · Binnenhof · Lunch · Vredespaleis · De Passage' },
+        ]
+      },
+      {
+        num: 8, weekday: 'Monday', title: 'Travel Home',
+        teaser: 'Everyone flies out · Gino + Stefan stay on',
+        acts: [
+          { e: '✈️', t: 'Sam, Sean, Steve, Victor &amp; Angelo head to the airport' },
+          { e: '😎', t: 'Gino + Stefan stay on — one last night in Amsterdam' },
+        ]
+      },
+      {
+        num: 9, weekday: 'Tuesday', title: 'Stefan → Lisbon',
+        teaser: 'Flight H5959 · AMS → Lisbon',
+        acts: [
+          { e: '✈️', t: '<strong>Stefan departs</strong> — flight H5959, Amsterdam → Lisbon' },
+        ]
+      },
+    ];
+
+    // Build cards
+    const cardsEl = document.getElementById('dayCards');
+    DAYS.forEach((day, i) => {
+      const card = document.createElement('div');
+      card.className = 'day-card';
+      card.innerHTML = `
+        <div class="dc-num">${day.num}</div>
+        <div class="dc-month">June</div>
+        <div class="dc-weekday">${day.weekday}</div>
+        <div class="dc-title">${day.title}</div>
+        <div class="dc-teaser">${day.teaser}</div>
+        <div class="dc-arrow">→</div>
+      `;
+      card.addEventListener('click', () => openDay(i));
+      cardsEl.appendChild(card);
+    });
+
+    // Modal elements
+    const backdrop = document.getElementById('dayModalBackdrop');
+    const modal    = document.getElementById('dayModal');
+    const dmNum    = document.getElementById('dmNum');
+    const dmWeekday= document.getElementById('dmWeekday');
+    const dmTitle  = document.getElementById('dmTitle');
+    const dmBody   = document.getElementById('dmBody');
+    const dmPrev   = document.getElementById('dmPrev');
+    const dmNext   = document.getElementById('dmNext');
+    const dmClose  = document.getElementById('dmClose');
+
+    let currentIdx = 0;
+
+    function openDay(idx) {
+      currentIdx = idx;
+      renderModal();
+      backdrop.classList.add('open');
+      modal.scrollTop = 0;
+    }
+
+    function renderModal() {
+      const day = DAYS[currentIdx];
+      dmNum.textContent = day.num;
+      dmWeekday.textContent = day.weekday;
+      dmTitle.textContent = day.title;
+      dmPrev.disabled = currentIdx === 0;
+      dmNext.disabled = currentIdx === DAYS.length - 1;
+      dmBody.innerHTML = day.acts.map(a => `
+        <div class="act">
+          <span class="act-emoji">${a.e}</span>
+          <div class="act-text">${a.t}${a.s ? `<div class="act-sub">${a.s}</div>` : ''}</div>
+        </div>
+      `).join('');
+    }
+
+    function closeModal() {
+      backdrop.classList.remove('open');
+    }
+
+    dmClose.addEventListener('click', closeModal);
+    dmPrev.addEventListener('click', () => { if (currentIdx > 0) { currentIdx--; renderModal(); modal.scrollTop = 0; } });
+    dmNext.addEventListener('click', () => { if (currentIdx < DAYS.length - 1) { currentIdx++; renderModal(); modal.scrollTop = 0; } });
+
+    // Click backdrop (outside modal panel) to close
+    backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
+
+    // ESC key
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  </script>
+</body>
+</html>
