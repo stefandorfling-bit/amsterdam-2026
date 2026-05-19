@@ -726,6 +726,15 @@
         border: none;
       }
       .food-content-panel--right { border-left: none; }
+      .food-content-panel .rainy-card {
+        background: rgba(255,255,255,0.14);
+        backdrop-filter: blur(20px) saturate(160%);
+        -webkit-backdrop-filter: blur(20px) saturate(160%);
+        border: 1px solid rgba(255,255,255,0.22);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.25);
+      }
+      .food-content-panel .rainy-card-title { color: #fff; }
+      .food-content-panel .rainy-card-note { color: rgba(255,255,255,0.6); }
     }
 
     /* ── RAINY DAY ── */
@@ -886,10 +895,14 @@
       }
       .rainy-content-panel--right { border-left: none; }
       .rainy-card {
-        background: linear-gradient(145deg, #f6f1e8 0%, #ede4d5 100%);
-        border: 1px solid rgba(220,210,195,0.7);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.8);
+        background: rgba(255,255,255,0.14);
+        backdrop-filter: blur(20px) saturate(160%);
+        -webkit-backdrop-filter: blur(20px) saturate(160%);
+        border: 1px solid rgba(255,255,255,0.22);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.25);
       }
+      .rainy-card-title { color: #fff; }
+      .rainy-card-note { color: rgba(255,255,255,0.6); }
     }
 
     /* ── TRANSPORT ── */
