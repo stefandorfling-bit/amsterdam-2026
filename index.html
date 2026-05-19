@@ -601,13 +601,16 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 0;
-      border-top: 0.5px solid var(--border);
-      border-left: 0.5px solid var(--border);
+      border-top: 0.5px solid rgba(255,255,255,0.15);
+      border-left: 0.5px solid rgba(255,255,255,0.15);
     }
     .bar-cell {
       padding: 1.8rem 1.5rem;
-      border-right: 0.5px solid var(--border);
-      border-bottom: 0.5px solid var(--border);
+      border-right: 0.5px solid rgba(255,255,255,0.15);
+      border-bottom: 0.5px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
     .bar-type-label {
       font-size: 9px;
@@ -622,11 +625,12 @@
       font-style: normal;
       font-size: 1.35rem;
       font-weight: 600;
-      color: var(--ink);
+      color: #fff;
       margin-bottom: 0.4rem;
     }
-    .bar-detail { font-size: 12px; font-weight: 300; color: var(--muted); line-height: 1.6; }
-    .bar-cell.is-club .bar-name { color: var(--red); }
+    .bar-type-label { color: rgba(255,255,255,0.55); }
+    .bar-detail { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.6; }
+    .bar-cell.is-club .bar-name { color: #fff; }
 
     /* ── EXTRAS GRID ── */
     .extras-grid {
@@ -1639,9 +1643,9 @@
   <div class="panel-gap"></div>
 
   <!-- NIGHTS OUT PANEL -->
-  <section id="nights" class="panel">
-    <div class="section-label">After dark</div>
-    <div class="section-heading">Gay bars + clubs</div>
+  <section id="nights" class="panel-glass">
+    <div class="section-label" style="color:rgba(255,255,255,0.55);">After dark</div>
+    <div class="section-heading" style="color:#fff;">Gay bars + clubs</div>
     <div class="bars-grid">
       <div class="bar-cell" id="queensheadCard" style="cursor:pointer;" onclick="document.getElementById('queensheadLightbox').classList.add('open')">
         <div class="bar-type-label">Bar</div>
