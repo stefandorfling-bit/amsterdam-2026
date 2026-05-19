@@ -1080,7 +1080,9 @@
       font-family: var(--f-nav);
       font-size: 10px;
       letter-spacing: 2px;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.6);
+      position: relative;
+      z-index: 2;
     }
     .carousel-dots { display: none; justify-content: center; gap: 6px; margin-top: 0.6rem; }
     .carousel-dot {
@@ -1844,10 +1846,11 @@
 
       </div>
 
-      <!-- Mobile carousel counter + dots -->
-      <div class="carousel-counter" id="carouselCounter">1 / 5</div>
-      <div class="carousel-dots" id="carouselDots"></div>
     </div>
+
+    <!-- Mobile carousel counter + dots — outside the scrollable wrap -->
+    <div class="carousel-counter" id="carouselCounter">1 / 5</div>
+    <div class="carousel-dots" id="carouselDots"></div>
   </section>
 
   <script>
