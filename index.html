@@ -664,10 +664,16 @@
       top: 0; left: 0; right: 0; height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
     }
-    .action-card:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.38); transform: translateY(-2px); }
+    .action-card:hover { filter: brightness(1.15); transform: translateY(-2px); }
     .action-card:active { transform: scale(0.98); }
-    .action-card.is-done { background: rgba(60,180,80,0.18); border-color: rgba(60,180,80,0.45); }
-    .action-card.is-skip { background: rgba(200,57,31,0.12); border-color: rgba(200,57,31,0.35); }
+    .action-card.is-done { background: rgba(60,180,80,0.35) !important; border-color: rgba(60,180,80,0.55) !important; }
+    .action-card.is-skip { background: rgba(200,57,31,0.25) !important; border-color: rgba(200,57,31,0.45) !important; }
+
+    /* Per-card colour tints */
+    .card-tricount  { background: rgba(36,95,210,0.28);  border-color: rgba(36,95,210,0.45); }
+    .card-esim      { background: rgba(180,15,60,0.28);  border-color: rgba(180,15,60,0.45); }
+    .card-rijks     { background: rgba(70,165,166,0.30); border-color: rgba(70,165,166,0.48); }
+    .card-canoe     { background: rgba(210,95,10,0.28);  border-color: rgba(210,95,10,0.45); }
     .action-card.is-skip .ac-title { text-decoration: line-through; opacity: 0.6; }
 
     /* Dismiss button — absolute top-right */
@@ -1371,7 +1377,7 @@
     <div class="action-cards-wrap" id="actionCardsWrap">
       <div class="action-cards-grid" id="actionCardsGrid">
 
-        <div class="action-card" data-link="https://tricount.com/tpKBmqdOUJDJUjBRcj" data-id="tricount">
+        <div class="action-card card-tricount" data-link="https://tricount.com/tpKBmqdOUJDJUjBRcj" data-id="tricount">
           <button class="ac-dismiss" title="Cycle status">✕</button>
           <div class="ac-logo-area">
             <div class="ac-logo" id="logo-tricount"><img src="https://play-lh.googleusercontent.com/O284MSRmvHs4jfH4hqbn2771WJxkZptZm9qVVUW1GMSO2B9pj3yJTClYrOw72WDRuDQ=w480-h960-rw" alt="Tricount" /></div>
@@ -1383,7 +1389,7 @@
           <div class="ac-arrow">↗</div>
         </div>
 
-        <div class="action-card" data-link="https://esim.holafly.com/esim-netherlands/?selectedDays=5&startDate=2026-06-04&endDate=2026-06-08" data-id="esim">
+        <div class="action-card card-esim" data-link="https://esim.holafly.com/esim-netherlands/?selectedDays=5&startDate=2026-06-04&endDate=2026-06-08" data-id="esim">
           <button class="ac-dismiss" title="Cycle status">✕</button>
           <div class="ac-logo-area">
             <div class="ac-logo" id="logo-esim"><img src="https://play-lh.googleusercontent.com/Bi6gLMp19UledH7jGMIZnhxw2LQIF38W6_2zPcwcs6T8c2QcVS0Im87RNW8IKM9aJB0=w480-h960-rw" alt="eSIM" /></div>
@@ -1395,7 +1401,7 @@
           <div class="ac-arrow">↗</div>
         </div>
 
-        <div class="action-card" data-link="https://www.rijksmuseum.nl/en/tickets/articles" data-id="rijks">
+        <div class="action-card card-rijks" data-link="https://www.rijksmuseum.nl/en/tickets/articles" data-id="rijks">
           <button class="ac-dismiss" title="Cycle status">✕</button>
           <div class="ac-logo-area">
             <div class="ac-logo" id="logo-rijks" style="background:#4ec4b8;"><img src="rijks-logo.png" alt="Rijksmuseum" style="object-fit:contain;" /></div>
@@ -1407,7 +1413,7 @@
           <div class="ac-arrow">↗</div>
         </div>
 
-        <div class="action-card" data-link="https://kanoensupamsterdam.nl/en/kayak-rental/" data-id="kayak">
+        <div class="action-card card-canoe" data-link="https://kanoensupamsterdam.nl/en/kayak-rental/" data-id="kayak">
           <button class="ac-dismiss" title="Cycle status">✕</button>
           <div class="ac-logo-area">
             <div class="ac-logo" id="logo-kayak"><img src="kayak-logo.jpg" alt="Kano en SUP Amsterdam" /></div>
