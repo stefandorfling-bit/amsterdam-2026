@@ -790,6 +790,7 @@
       margin-bottom: 0.6rem;
       display: flex;
       align-items: center;
+      flex-shrink: 0;
     }
     .rainy-card-logo img {
       height: 100%;
@@ -797,6 +798,22 @@
       max-width: 120px;
       object-fit: contain;
       border-radius: 6px;
+    }
+    /* Full-bleed photo version for food cards */
+    .rainy-card-photo {
+      width: calc(100% + 2.6rem);
+      margin: -1.2rem -1.3rem 0.8rem;
+      height: 100px;
+      overflow: hidden;
+      border-radius: 14px 14px 0 0;
+      flex-shrink: 0;
+    }
+    .rainy-card-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
     .rainy-card-title {
       font-family: var(--f-display);
@@ -1781,17 +1798,17 @@
 
         <div class="food-content-panel">
           <div class="rainy-card">
-            <div class="rainy-card-logo"><img src="zerozero.jpg" alt="Zero Zero" /></div>
+            <div class="rainy-card-photo"><img src="zerozero.jpg" alt="Zero Zero" /></div>
             <div class="rainy-card-title">Zero Zero</div>
             <div class="rainy-card-note">Great sandwiches — perfect for a quick lunch</div>
           </div>
           <div class="rainy-card">
-            <div class="rainy-card-logo"><img src="Mangia.jpg" alt="Mangia Pizza" /></div>
+            <div class="rainy-card-photo"><img src="Mangia.jpg" alt="Mangia Pizza" /></div>
             <div class="rainy-card-title">Mangia Pizza</div>
             <div class="rainy-card-note">Casual and good — solid quick dinner option</div>
           </div>
           <div class="rainy-card">
-            <div class="rainy-card-logo"><img src="bakerij.jpg" alt="Bakkerij Wolf" /></div>
+            <div class="rainy-card-photo"><img src="bakerij.jpg" alt="Bakkerij Wolf" /></div>
             <div class="rainy-card-title">Bakkerij Wolf</div>
             <div class="rainy-card-note">Best breakfast spot in the 9 Streets area</div>
           </div>
@@ -1799,12 +1816,12 @@
 
         <div class="food-content-panel food-content-panel--right">
           <div class="rainy-card">
-            <div class="rainy-card-logo"><img src="glouglou.jpg" alt="Glouglou" /></div>
+            <div class="rainy-card-photo"><img src="glouglou.jpg" alt="Glouglou" /></div>
             <div class="rainy-card-title">Glouglou</div>
             <div class="rainy-card-note">Natural wine bar with great small plates in De Pijp</div>
           </div>
           <div class="rainy-card">
-            <div class="rainy-card-logo"><img src="winkel43.jpg" alt="Winkel 43" /></div>
+            <div class="rainy-card-photo"><img src="winkel43.jpg" alt="Winkel 43" /></div>
             <div class="rainy-card-title">Winkel 43</div>
             <div class="rainy-card-note">Famous apple pie — a must in Jordaan</div>
           </div>
