@@ -2299,17 +2299,7 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
   </script>
   <!-- QUEEN'S HEAD LIGHTBOX -->
-  <div id="queensheadLightbox" style="
-    display: none;
-    position: fixed; inset: 0; z-index: 9000;
-    background: rgba(10,8,5,0.88);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    cursor: zoom-out;
-  " onclick="this.classList.remove('open')">
+  <div id="queensheadLightbox" onclick="this.classList.remove('open')">
     <div style="position:relative; max-width:560px; width:100%; cursor:default;" onclick="event.stopPropagation()">
       <img src="queenshead.jpg" alt="The Queen's Head calendar" style="
         width: 100%;
@@ -2335,7 +2325,17 @@
   </div>
 
   <style>
-    #queensheadLightbox { display: none; }
+    #queensheadLightbox {
+      display: none;
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(10,8,5,0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      cursor: zoom-out;
+    }
     #queensheadLightbox.open { display: flex; }
   </style>
 
