@@ -1,58 +1,74 @@
 const TOKEN = 'B2e5n8hH4Ivqjui';
+const SERVERS = ['p164','p01','p04','p06','p10','p23','p36','p58','p73'];
 
-async function post(url, body) {
+async function tryFetch(url, body) {
   const r = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-  return r.json();
+  const text = await r.text();
+  try { return JSON.parse(text); } catch { return null; }
+}
+
+async function findHost() {
+  // Try servers until one responds with the actual host or with photos
+  for (const s of SERVERS) {
+    const j = await tryFetch(
+      `https://${s}-sharedstreams.icloud.com/${TOKEN}/sharedstreams/webstream`,
+      { streamCtag: null }
+    ).catch(() => null);
+    if (!j) continue;
+    if (j['X-Apple-MMe-Host']) return { host: j['X-Apple-MMe-Host'], photos: null };
+    if (Array.isArray(j.photos)) return { host: `${s}-sharedstreams.icloud.com`, photos: j.photos };
+  }
+  return null;
 }
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Cache-Control', 's-maxage=120, stale-while-revalidate=300');
+  res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
 
   try {
-    // Step 1: discover correct host
-    const j1 = await post(
-      `https://p01-sharedstreams.icloud.com/${TOKEN}/sharedstreams/webstream`,
-      { streamCtag: null }
-    );
-    const host = j1['X-Apple-MMe-Host'] || 'p01-sharedstreams.icloud.com';
+    const result = await findHost();
+    if (!result) return res.json({ urls: [], debug: 'no host found' });
 
-    // Step 2: fetch photo list from correct host
-    const j2 = await post(
-      `https://${host}/${TOKEN}/sharedstreams/webstream`,
-      { streamCtag: null }
-    );
-    const photos = j2.photos || [];
+    let { host, photos } = result;
 
-    if (!photos.length) return res.json({ urls: [] });
+    // If redirect gave us a host but no photos yet, fetch from correct host
+    if (!photos) {
+      const j2 = await tryFetch(
+        `https://${host}/${TOKEN}/sharedstreams/webstream`,
+        { streamCtag: null }
+      );
+      photos = (j2 && j2.photos) || [];
+    }
 
-    // Step 3: pick latest 5
+    if (!photos.length) return res.json({ urls: [], debug: 'album empty' });
+
+    // Pick latest 5
     const latest = [...photos]
       .sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated))
       .slice(0, 5);
 
     const guids = latest.map(p => p.photoGuid);
 
-    // Step 4: resolve CDN URLs
-    const j3 = await post(
+    // Get CDN URLs
+    const j3 = await tryFetch(
       `https://${host}/${TOKEN}/sharedstreams/webasseturls`,
       { photoGuids: guids }
     );
-    const items = j3.items || {};
+    const items = (j3 && j3.items) || {};
 
     const urls = guids.map(guid => {
       const item = items[guid];
       if (!item) return null;
       const loc  = item.url_location;
       const path = item.url_path;
-      return loc && path ? `https://${loc}${path}` : null;
+      return (loc && path) ? `https://${loc}${path}` : null;
     }).filter(Boolean);
 
-    res.json({ urls });
+    res.json({ urls, count: photos.length });
   } catch (e) {
     res.status(500).json({ urls: [], error: e.message });
   }
