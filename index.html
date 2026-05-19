@@ -635,6 +635,96 @@
     }
     .extra-icon { font-size: 13px; flex-shrink: 0; width: 18px; }
 
+    /* ── FOOD SECTION ── */
+    .food-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr; /* mirrored: cards | photo */
+      min-height: 480px;
+    }
+    .food-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .food-content-panel {
+      padding: 2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      min-height: 480px;
+    }
+    .food-content-panel--right {
+      border-left: 0.5px solid var(--border);
+    }
+    .food-image-panel {
+      position: relative;
+      overflow: hidden;
+      border-left: 0.5px solid var(--border);
+    }
+    .food-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .food-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,10,5,0.7) 0%, rgba(15,10,5,0.1) 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+    }
+
+    /* Mobile: photo fills full section, glass cards on top */
+    @media (max-width: 600px) {
+      .food-grid {
+        grid-template-columns: 1fr;
+        position: relative;
+        min-height: 92svh;
+      }
+      .food-image-panel {
+        position: absolute;
+        inset: 0;
+        border-left: none;
+      }
+      .food-image-overlay {
+        background: linear-gradient(
+          to bottom,
+          rgba(10,8,5,0.55) 0%,
+          rgba(10,8,5,0.0) 30%,
+          rgba(10,8,5,0.0) 50%,
+          rgba(10,8,5,0.75) 100%
+        );
+        justify-content: flex-start;
+        padding-top: 2rem;
+      }
+      .food-options {
+        position: relative;
+        z-index: 2;
+        grid-template-columns: 1fr;
+        min-height: 92svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 1.5rem;
+        gap: 10px;
+        pointer-events: none;
+      }
+      .food-content-panel {
+        pointer-events: all;
+        min-height: auto;
+        padding: 0;
+        gap: 10px;
+        background: transparent;
+        border: none;
+      }
+      .food-content-panel--right { border-left: none; }
+    }
+
     /* ── RAINY DAY ── */
     .rainy-grid {
       display: grid;
@@ -1087,7 +1177,7 @@
     <div class="nav-logo">Amsterdam</div>
     <div class="nav-links nav-right">
       <a href="#transport">Getting there</a>
-      <a href="#extras">To-do</a>
+      <a href="#actions">To-do</a>
       <a href="#food">Food</a>
       <a href="https://www.icloud.com/sharedalbum/#B2e5n8hH4Ivqjui" target="_blank" style="color: var(--red); opacity: 1;">📸 Photos</a>
     </div>
@@ -1682,22 +1772,53 @@
   <!-- GAP -->
   <div class="panel-gap"></div>
 
-  <!-- EXTRAS PANEL -->
-  <section id="extras" class="panel">
-    <div class="extras-grid">
+  <!-- FOOD PANEL -->
+  <section id="food" class="panel" style="padding: 0; overflow: hidden;">
+    <div class="food-grid">
 
-      <!-- Rainy day moved to its own section below -->
+      <!-- Panels 1 & 2: food cards -->
+      <div class="food-options">
 
-      <div class="extra-col" id="food">
-        <div class="section-label">Eat &amp; drink</div>
-        <div class="section-heading" style="font-size:2rem; margin-bottom:0">Food options</div>
-        <ul class="extra-list">
-          <li><span class="extra-icon">🥖</span> Zero Zero — sandwiches for lunch</li>
-          <li><span class="extra-icon">🍕</span> Mangia Pizza — quick dinner</li>
-          <li><span class="extra-icon">🥐</span> Bakkerij Wolf — breakfast</li>
-          <li><span class="extra-icon">🍷</span> Glouglou — wine bar</li>
-          <li><span class="extra-icon">🥧</span> Winkel 43 — apple pie</li>
-        </ul>
+        <div class="food-content-panel">
+          <div class="rainy-card">
+            <div class="rainy-card-emoji">🥖</div>
+            <div class="rainy-card-title">Zero Zero</div>
+            <div class="rainy-card-note">Great sandwiches — perfect for a quick lunch</div>
+          </div>
+          <div class="rainy-card">
+            <div class="rainy-card-emoji">🍕</div>
+            <div class="rainy-card-title">Mangia Pizza</div>
+            <div class="rainy-card-note">Casual and good — solid quick dinner option</div>
+          </div>
+          <div class="rainy-card">
+            <div class="rainy-card-emoji">🥐</div>
+            <div class="rainy-card-title">Bakkerij Wolf</div>
+            <div class="rainy-card-note">Best breakfast spot in the 9 Streets area</div>
+          </div>
+        </div>
+
+        <div class="food-content-panel food-content-panel--right">
+          <div class="rainy-card">
+            <div class="rainy-card-emoji">🍷</div>
+            <div class="rainy-card-title">Glouglou</div>
+            <div class="rainy-card-note">Natural wine bar with great small plates in De Pijp</div>
+          </div>
+          <div class="rainy-card">
+            <div class="rainy-card-emoji">🥧</div>
+            <div class="rainy-card-title">Winkel 43</div>
+            <div class="rainy-card-note">Famous apple pie — a must in Jordaan</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Panel 3: food photo -->
+      <div class="food-image-panel">
+        <img src="food.jpg" alt="Amsterdam food" class="food-photo" />
+        <div class="food-image-overlay">
+          <div class="section-label" style="color:rgba(255,255,255,0.6);">Eat &amp; drink</div>
+          <div class="section-heading" style="color:#fff; font-size:2.5rem; margin-bottom:0;">food options</div>
+        </div>
       </div>
 
     </div>
