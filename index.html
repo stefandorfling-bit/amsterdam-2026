@@ -2330,41 +2330,36 @@
 
     function applyStack(offset) {
       cells.forEach((cell, i) => {
-        const pos = i - current;
-
-        if (pos < 0) {
-          // Already swiped — hide below
-          cell.style.cssText = 'opacity:0; pointer-events:none; transform:translateX(-120%) rotate(-20deg); z-index:1; transition:transform .35s ease, opacity .35s;';
+        // Circular position relative to current
+        let pos = (i - current + total) % total;
+        // Cards with pos > total/2 are "behind" (wrap-around prev cards) — hide them
+        if (pos > Math.min(3, total - 1)) {
+          cell.style.opacity = '0';
+          cell.style.pointerEvents = 'none';
+          cell.style.transition = 'opacity .2s';
           return;
         }
 
-        const isTop  = pos === 0;
-        const t = pos === 1 ? 'translateY(-12px) scale(0.95)' :
-                  pos === 2 ? 'translateY(-22px) scale(0.90)' :
-                  pos === 3 ? 'translateY(-30px) scale(0.86)' : 'translateY(-36px) scale(0.83)';
-
-        if (isTop) {
+        if (pos === 0) {
+          // Top card — follows finger
           const rot = offset * 0.05;
-          cell.style.transform   = dragging ? `translateX(${offset}px) rotate(${rot}deg)` : 'none';
-          cell.style.zIndex      = '10';
-          cell.style.opacity     = '1';
+          cell.style.transform     = dragging ? `translateX(${offset}px) rotate(${rot}deg)` : 'translateY(0) scale(1)';
+          cell.style.zIndex        = '10';
+          cell.style.opacity       = '1';
           cell.style.pointerEvents = 'auto';
-          cell.style.transition  = dragging ? 'none' : 'transform .35s cubic-bezier(.4,0,.2,1), opacity .3s';
-        } else if (pos <= 3) {
-          // Cards behind scale up slightly as top card is dragged
-          const prog = Math.min(1, Math.abs(offset) / 100);
-          const scaleBoost  = pos === 1 ? prog * 0.05 : 0;
-          const yBoost      = pos === 1 ? prog * 12 : 0;
-          const baseScale   = pos === 1 ? 0.95 : pos === 2 ? 0.90 : 0.86;
-          const baseY       = pos === 1 ? -12 : pos === 2 ? -22 : -30;
-          cell.style.transform   = `translateY(${baseY + yBoost}px) scale(${baseScale + scaleBoost})`;
-          cell.style.zIndex      = String(10 - pos);
-          cell.style.opacity     = pos === 1 ? '1' : pos === 2 ? '0.9' : '0.75';
-          cell.style.pointerEvents = 'none';
-          cell.style.transition  = 'transform .35s ease, opacity .3s';
+          cell.style.transition    = dragging ? 'none' : 'transform .35s cubic-bezier(.4,0,.2,1), opacity .3s';
         } else {
-          cell.style.opacity = '0';
+          // Cards in the stack behind — animate slightly forward as top card is dragged
+          const prog       = Math.min(1, Math.abs(offset) / 100);
+          const scaleBoost = pos === 1 ? prog * 0.05 : 0;
+          const yBoost     = pos === 1 ? prog * 12 : 0;
+          const baseScale  = pos === 1 ? 0.95 : pos === 2 ? 0.90 : 0.86;
+          const baseY      = pos === 1 ? -12 : pos === 2 ? -22 : -30;
+          cell.style.transform     = `translateY(${baseY + yBoost}px) scale(${baseScale + scaleBoost})`;
+          cell.style.zIndex        = String(10 - pos);
+          cell.style.opacity       = pos === 1 ? '1' : pos === 2 ? '0.85' : '0.7';
           cell.style.pointerEvents = 'none';
+          cell.style.transition    = 'transform .35s ease, opacity .3s';
         }
       });
     }
@@ -2381,27 +2376,28 @@
       updateUI();
     }
 
-    function swipeAway(dir) {
+    function swipeAway(swipeDir) {
+      // swipeDir: -1 = swiped left (go next), +1 = swiped right (go prev)
+      // Card exits in the SAME direction as the finger
       const top = cells[current];
       top.style.transition = 'transform .35s cubic-bezier(.4,0,.2,1), opacity .3s';
-      top.style.transform  = `translateX(${dir * 110}%) rotate(${dir * 18}deg)`;
+      top.style.transform  = `translateX(${swipeDir * 110}%) rotate(${swipeDir * 15}deg)`;
       top.style.opacity    = '0';
-      if (dir > 0) {
-        // swiped left — go to next
-        if (current < total - 1) { setTimeout(() => { current++; applyStack(0); updateUI(); }, 120); }
-        else { setTimeout(() => applyStack(0), 120); } // snap back if last
-      } else {
-        // swiped right — go to prev (bring back)
-        if (current > 0) {
-          current--;
-          setTimeout(() => { cells[current].style.transition = 'none'; cells[current].style.cssText = ''; applyStack(0); updateUI(); }, 50);
+
+      setTimeout(() => {
+        if (swipeDir < 0) {
+          // Swiped left → advance to next (circular)
+          current = (current + 1) % total;
         } else {
-          setTimeout(() => applyStack(0), 120);
+          // Swiped right → go to prev (circular)
+          current = (current - 1 + total) % total;
         }
-      }
+        applyStack(0);
+        updateUI();
+      }, 200);
     }
 
-    // Touch handling on grid (not individual cells, to avoid re-binding)
+    // Touch handling
     grid.addEventListener('touchstart', e => {
       if (!isMob()) return;
       startX = e.touches[0].clientX;
@@ -2417,9 +2413,9 @@
     grid.addEventListener('touchend', () => {
       if (!isMob()) return;
       dragging = false;
-      if (dragX < -60) swipeAway(1);       // swipe left = next
-      else if (dragX > 60) swipeAway(-1);  // swipe right = prev
-      else applyStack(0);                  // snap back
+      if (dragX < -60)      swipeAway(-1);  // swiped left  → card exits left  → next
+      else if (dragX > 60)  swipeAway(1);   // swiped right → card exits right → prev
+      else                  applyStack(0);  // snap back
     });
 
     // Init
