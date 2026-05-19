@@ -631,6 +631,130 @@
     }
     .extra-icon { font-size: 13px; flex-shrink: 0; width: 18px; }
 
+    /* ── ACTION CARDS ── */
+    .action-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .action-card {
+      position: relative;
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255,255,255,0.24);
+      border-radius: 20px;
+      padding: 1.2rem 1.2rem 1.4rem;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      overflow: hidden;
+      user-select: none;
+    }
+    .action-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    }
+    .action-card:hover {
+      background: rgba(255,255,255,0.22);
+      border-color: rgba(255,255,255,0.38);
+      transform: translateY(-2px);
+    }
+    .action-card:active { transform: scale(0.98); }
+
+    /* Done state */
+    .action-card.is-done {
+      background: rgba(60,180,80,0.18);
+      border-color: rgba(60,180,80,0.4);
+    }
+    .action-card.is-done:hover {
+      background: rgba(60,180,80,0.22);
+    }
+    /* Won't do state */
+    .action-card.is-skip {
+      background: rgba(200,57,31,0.1);
+      border-color: rgba(200,57,31,0.3);
+      opacity: 0.7;
+    }
+    .action-card.is-skip .ac-title { text-decoration: line-through; }
+    .action-card.is-skip:hover { opacity: 0.85; }
+
+    .ac-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.1rem; }
+    .ac-logo {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .ac-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 11px; }
+    .ac-logo-placeholder {
+      font-family: var(--f-display);
+      font-size: 1.4rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: lowercase;
+    }
+    .ac-dismiss {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.7);
+      font-size: 11px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.15s;
+      padding: 0;
+      line-height: 1;
+    }
+    .ac-dismiss:hover { background: rgba(200,57,31,0.4); color: white; }
+    .is-skip .ac-dismiss { background: rgba(200,57,31,0.5); color: white; }
+    .is-done .ac-dismiss { background: rgba(255,255,255,0.2); }
+
+    .ac-status {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: rgba(60,180,80,0.85);
+      color: white;
+      font-size: 11px;
+      display: none;
+      align-items: center; justify-content: center;
+    }
+    .is-done .ac-status { display: flex; }
+
+    .ac-title {
+      font-family: var(--f-display);
+      font-size: 1rem;
+      font-weight: 400;
+      color: #fff;
+      text-transform: lowercase;
+      line-height: 1.3;
+      margin-bottom: 0.35rem;
+    }
+    .ac-note {
+      font-size: 11px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.52);
+      line-height: 1.5;
+    }
+    .ac-arrow {
+      position: absolute;
+      bottom: 1.1rem; right: 1.2rem;
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .action-card:hover .ac-arrow { color: rgba(255,255,255,0.8); transform: translate(2px,-2px); }
+    .is-done .ac-arrow, .is-skip .ac-arrow { display: none; }
+
+    @media (max-width: 960px) { .action-cards-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .action-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; } .ac-title { font-size: 0.88rem; } }
+
     /* ── FOOTER ── */
     footer {
       position: relative;
@@ -1229,6 +1353,123 @@
   <!-- GAP -->
   <div class="panel-gap"></div>
 
+  <!-- ACTION CARDS PANEL -->
+  <section id="actions" class="panel-glass">
+    <div class="section-label" style="color:rgba(255,255,255,0.55);">Before you go</div>
+    <div class="section-heading" style="color:#fff; margin-bottom:1.8rem;">things to action</div>
+
+    <div class="action-cards-grid">
+
+      <div class="action-card" data-link="https://tricount.com/tpKBmqdOUJDJUjBRcj" data-id="tricount">
+        <div class="ac-top">
+          <div class="ac-logo" id="logo-tricount">
+            <div class="ac-logo-placeholder">t</div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <div class="ac-status">✓</div>
+            <button class="ac-dismiss" data-id="tricount" title="Won't do">✕</button>
+          </div>
+        </div>
+        <div class="ac-title">Join the Tricount group</div>
+        <div class="ac-note">Split and track expenses with the group</div>
+        <div class="ac-arrow">↗</div>
+      </div>
+
+      <div class="action-card" data-link="https://esim.holafly.com/esim-netherlands/?selectedDays=5&startDate=2026-06-04&endDate=2026-06-08" data-id="esim">
+        <div class="ac-top">
+          <div class="ac-logo" id="logo-esim">
+            <div class="ac-logo-placeholder">e</div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <div class="ac-status">✓</div>
+            <button class="ac-dismiss" data-id="esim" title="Won't do">✕</button>
+          </div>
+        </div>
+        <div class="ac-title">Get an eSIM</div>
+        <div class="ac-note">Netherlands · 5 days · dates pre-selected</div>
+        <div class="ac-arrow">↗</div>
+      </div>
+
+      <div class="action-card" data-link="https://www.rijksmuseum.nl/en/tickets/articles" data-id="rijks">
+        <div class="ac-top">
+          <div class="ac-logo" id="logo-rijks">
+            <div class="ac-logo-placeholder">r</div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <div class="ac-status">✓</div>
+            <button class="ac-dismiss" data-id="rijks" title="Won't do">✕</button>
+          </div>
+        </div>
+        <div class="ac-title">Book Rijksmuseum tickets</div>
+        <div class="ac-note">Jun 5 · 11am · select "Museum Entrance" type</div>
+        <div class="ac-arrow">↗</div>
+      </div>
+
+      <div class="action-card" data-link="https://kanoensupamsterdam.nl/en/kayak-rental/" data-id="kayak">
+        <div class="ac-top">
+          <div class="ac-logo" id="logo-kayak">
+            <div class="ac-logo-placeholder">k</div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <div class="ac-status">✓</div>
+            <button class="ac-dismiss" data-id="kayak" title="Won't do">✕</button>
+          </div>
+        </div>
+        <div class="ac-title">Book kayak rental</div>
+        <div class="ac-note">Jun 6 · if the group is up for it</div>
+        <div class="ac-arrow">↗</div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    /* ── ACTION CARDS ── */
+    const cardStates = {};
+
+    document.querySelectorAll('.action-card').forEach(card => {
+      const id   = card.dataset.id;
+      const link = card.dataset.link;
+      cardStates[id] = 'default';
+
+      // Click dismiss button → toggle won't-do
+      const btn = card.querySelector('.ac-dismiss');
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (cardStates[id] === 'skip') {
+          cardStates[id] = 'default';
+          card.classList.remove('is-skip');
+        } else {
+          cardStates[id] = 'skip';
+          card.classList.remove('is-done');
+          card.classList.add('is-skip');
+        }
+      });
+
+      // Click card body → open link + toggle done
+      card.addEventListener('click', function() {
+        if (cardStates[id] === 'done') {
+          // Already done — reset
+          cardStates[id] = 'default';
+          card.classList.remove('is-done');
+        } else if (cardStates[id] === 'skip') {
+          // Skip state — click resets
+          cardStates[id] = 'default';
+          card.classList.remove('is-skip');
+        } else {
+          // Default — open link and mark done
+          if (link && link !== '#') window.open(link, '_blank');
+          cardStates[id] = 'done';
+          card.classList.remove('is-skip');
+          card.classList.add('is-done');
+        }
+      });
+    });
+  </script>
+
+  <!-- GAP -->
+  <div class="panel-gap"></div>
+
   <!-- EXTRAS PANEL -->
   <section id="extras" class="panel">
     <div class="extras-grid">
@@ -1237,11 +1478,7 @@
         <div class="section-label">Before you go</div>
         <div class="section-heading" style="font-size:2rem; margin-bottom:0">To-do list</div>
         <ul class="extra-list">
-          <li><div class="check-box"></div> Set up Splitwise</li>
-          <li><div class="check-box"></div> <a href="#transport" style="color:var(--red); text-decoration:none; border-bottom: 0.5px solid var(--red); padding-bottom:1px;">Airport transportation — sorted, see above ↑</a></li>
-          <li><div class="check-box"></div> <a href="https://esim.holafly.com/esim-netherlands/?selectedDays=5&startDate=2026-06-04&endDate=2026-06-08" target="_blank" style="color:var(--red); text-decoration:none; border-bottom: 0.5px solid var(--red); padding-bottom:1px;">Get an eSIM ↗</a></li>
-          <li><div class="check-box"></div> <a href="https://www.rijksmuseum.nl/en/tickets/articles" target="_blank" style="color:var(--red); text-decoration:none; border-bottom: 0.5px solid var(--red); padding-bottom:1px;">Book Rijksmuseum tickets (Jun 5, 11am) ↗</a> <span style="font-size:11px; color:var(--muted);">— select "Museum Entrance" ticket type</span></li>
-          <li><div class="check-box"></div> <a href="https://kanoensupamsterdam.nl/en/kayak-rental/" target="_blank" style="color:var(--red); text-decoration:none; border-bottom: 0.5px solid var(--red); padding-bottom:1px;">Book kayak rental if wanted (Jun 6) ↗</a></li>
+          <li><div class="check-box"></div> <a href="#transport" style="color:var(--red); text-decoration:none; border-bottom: 0.5px solid var(--red); padding-bottom:1px;">Airport transport — sorted, see above ↑</a></li>
         </ul>
       </div>
 
