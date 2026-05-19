@@ -302,6 +302,10 @@
       margin-bottom: 1rem;
       background: #e0d8cc;
       flex-shrink: 0;
+      box-shadow:
+        0 6px 20px rgba(0,0,0,0.22),
+        0 2px 6px rgba(0,0,0,0.14),
+        inset 0 1px 0 rgba(255,255,255,0.35);
     }
     .person-photo-wrap img {
       width: 100%;
@@ -654,9 +658,13 @@
       display: flex;
       flex-direction: column;
       cursor: pointer;
-      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
       overflow: hidden;
       user-select: none;
+      box-shadow:
+        0 12px 36px rgba(0,0,0,0.28),
+        0 3px 10px rgba(0,0,0,0.16),
+        inset 0 1px 0 rgba(255,255,255,0.22);
     }
     .action-card::before {
       content: '';
@@ -664,7 +672,7 @@
       top: 0; left: 0; right: 0; height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
     }
-    .action-card:hover { filter: brightness(1.15); transform: translateY(-2px); }
+    .action-card:hover { filter: brightness(1.15); transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,0.34), 0 6px 16px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.28); }
     .action-card:active { transform: scale(0.98); }
     .action-card.is-done { background: rgba(60,180,80,0.35) !important; border-color: rgba(60,180,80,0.55) !important; }
     .action-card.is-skip { background: rgba(200,57,31,0.25) !important; border-color: rgba(200,57,31,0.45) !important; }
@@ -1046,8 +1054,9 @@
       display: inline-flex; align-items: center; gap: 0.6rem;
       font-family: var(--f-nav); font-size: 10px; letter-spacing: 2.5px;
       text-transform: uppercase; color: var(--cream); background: var(--red);
-      text-decoration: none; padding: 0.85rem 2rem; transition: background 0.2s;
-    " onmouseover="this.style.background='#a82e18'" onmouseout="this.style.background='var(--red)'">
+      text-decoration: none; padding: 0.85rem 2rem; transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      box-shadow: 0 6px 18px rgba(200,57,31,0.38), 0 2px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.15);
+    " onmouseover="this.style.background='#a82e18';this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 26px rgba(200,57,31,0.45), 0 3px 8px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.15)'" onmouseout="this.style.background='var(--red)';this.style.transform='';this.style.boxShadow='0 6px 18px rgba(200,57,31,0.38), 0 2px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.15)'">
       📸 &nbsp; Open shared album
     </a>
   </section>
