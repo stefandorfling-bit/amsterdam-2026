@@ -632,6 +632,7 @@
     .extra-icon { font-size: 13px; flex-shrink: 0; width: 18px; }
 
     /* ── ACTION CARDS ── */
+    .action-cards-wrap { position: relative; }
     .action-cards-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -644,11 +645,14 @@
       -webkit-backdrop-filter: blur(24px) saturate(160%);
       border: 1px solid rgba(255,255,255,0.24);
       border-radius: 20px;
-      padding: 1.2rem 1.2rem 1.4rem;
+      padding: 1.4rem 1.3rem 3.5rem;
       cursor: pointer;
       transition: background 0.2s, border-color 0.2s, transform 0.2s;
       overflow: hidden;
       user-select: none;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
     }
     .action-card::before {
       content: '';
@@ -657,103 +661,78 @@
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
     }
-    .action-card:hover {
-      background: rgba(255,255,255,0.22);
-      border-color: rgba(255,255,255,0.38);
-      transform: translateY(-2px);
-    }
+    .action-card:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.38); transform: translateY(-2px); }
     .action-card:active { transform: scale(0.98); }
+    .action-card.is-done { background: rgba(60,180,80,0.18); border-color: rgba(60,180,80,0.45); }
+    .action-card.is-skip { background: rgba(200,57,31,0.12); border-color: rgba(200,57,31,0.35); }
+    .action-card.is-skip .ac-title { text-decoration: line-through; opacity: 0.6; }
 
-    /* Done state */
-    .action-card.is-done {
-      background: rgba(60,180,80,0.18);
-      border-color: rgba(60,180,80,0.4);
-    }
-    .action-card.is-done:hover {
-      background: rgba(60,180,80,0.22);
-    }
-    /* Won't do state */
-    .action-card.is-skip {
-      background: rgba(200,57,31,0.1);
-      border-color: rgba(200,57,31,0.3);
-      opacity: 0.7;
-    }
-    .action-card.is-skip .ac-title { text-decoration: line-through; }
-    .action-card.is-skip:hover { opacity: 0.85; }
-
-    .ac-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.1rem; }
+    .ac-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: auto; }
     .ac-logo {
-      width: 48px; height: 48px;
-      border-radius: 12px;
+      width: 52px; height: 52px;
+      border-radius: 14px;
       background: rgba(255,255,255,0.2);
       border: 1px solid rgba(255,255,255,0.25);
       display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-      flex-shrink: 0;
+      overflow: hidden; flex-shrink: 0;
     }
-    .ac-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 11px; }
-    .ac-logo-placeholder {
-      font-family: var(--f-display);
-      font-size: 1.4rem;
-      color: rgba(255,255,255,0.6);
-      text-transform: lowercase;
-    }
+    .ac-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 13px; }
+    .ac-logo-placeholder { font-family: var(--f-display); font-size: 1.5rem; color: rgba(255,255,255,0.55); text-transform: lowercase; }
     .ac-dismiss {
-      width: 26px; height: 26px;
-      border-radius: 50%;
+      width: 28px; height: 28px; border-radius: 50%;
       background: rgba(255,255,255,0.15);
       border: 1px solid rgba(255,255,255,0.25);
       color: rgba(255,255,255,0.7);
       font-size: 11px;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: background 0.15s;
-      padding: 0;
-      line-height: 1;
+      cursor: pointer; flex-shrink: 0;
+      transition: background 0.15s, color 0.15s;
+      padding: 0; line-height: 1;
     }
-    .ac-dismiss:hover { background: rgba(200,57,31,0.4); color: white; }
-    .is-skip .ac-dismiss { background: rgba(200,57,31,0.5); color: white; }
-    .is-done .ac-dismiss { background: rgba(255,255,255,0.2); }
+    .action-card.is-skip .ac-dismiss { background: rgba(200,57,31,0.6); border-color: rgba(200,57,31,0.4); color: white; }
+    .action-card.is-done .ac-dismiss { background: rgba(60,180,80,0.6); border-color: rgba(60,180,80,0.4); color: white; }
 
-    .ac-status {
-      width: 22px; height: 22px;
-      border-radius: 50%;
-      background: rgba(60,180,80,0.85);
-      color: white;
-      font-size: 11px;
-      display: none;
-      align-items: center; justify-content: center;
-    }
-    .is-done .ac-status { display: flex; }
-
-    .ac-title {
-      font-family: var(--f-display);
-      font-size: 1rem;
-      font-weight: 400;
-      color: #fff;
-      text-transform: lowercase;
-      line-height: 1.3;
-      margin-bottom: 0.35rem;
-    }
-    .ac-note {
-      font-size: 11px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.52);
-      line-height: 1.5;
-    }
-    .ac-arrow {
-      position: absolute;
-      bottom: 1.1rem; right: 1.2rem;
-      font-size: 13px;
-      color: rgba(255,255,255,0.45);
-      transition: opacity 0.2s, transform 0.2s;
-    }
+    .ac-body { margin-top: 2rem; }
+    .ac-title { font-family: var(--f-display); font-size: 1.05rem; font-weight: 400; color: #fff; text-transform: lowercase; line-height: 1.3; margin-bottom: 0.4rem; }
+    .ac-note { font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.55; }
+    .ac-arrow { position: absolute; bottom: 1.3rem; right: 1.3rem; font-size: 14px; color: rgba(255,255,255,0.4); transition: color 0.2s, transform 0.2s; }
     .action-card:hover .ac-arrow { color: rgba(255,255,255,0.8); transform: translate(2px,-2px); }
-    .is-done .ac-arrow, .is-skip .ac-arrow { display: none; }
+    .action-card.is-done .ac-arrow, .action-card.is-skip .ac-arrow { opacity: 0; }
 
-    @media (max-width: 960px) { .action-cards-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px) { .action-cards-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; } .ac-title { font-size: 0.88rem; } }
+    /* Mobile carousel */
+    .carousel-counter {
+      display: none;
+      text-align: center;
+      margin-top: 1.2rem;
+      font-family: var(--f-nav);
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.5);
+    }
+    .carousel-dots { display: flex; justify-content: center; gap: 6px; margin-top: 0.6rem; }
+    .carousel-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer; transition: background 0.2s, transform 0.2s;
+    }
+    .carousel-dot.active { background: #fff; transform: scale(1.3); }
+
+    @media (max-width: 600px) {
+      .action-cards-wrap { overflow: hidden; }
+      .action-cards-grid {
+        display: flex;
+        transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+        gap: 0;
+        will-change: transform;
+      }
+      .action-card {
+        flex: 0 0 100%;
+        min-height: 300px;
+        margin: 0 6px;
+        border-radius: 18px;
+      }
+      .carousel-counter { display: block; }
+    }
 
     /* ── FOOTER ── */
     footer {
@@ -1358,113 +1337,137 @@
     <div class="section-label" style="color:rgba(255,255,255,0.55);">Before you go</div>
     <div class="section-heading" style="color:#fff; margin-bottom:1.8rem;">things to action</div>
 
-    <div class="action-cards-grid">
+    <div class="action-cards-wrap" id="actionCardsWrap">
+      <div class="action-cards-grid" id="actionCardsGrid">
 
-      <div class="action-card" data-link="https://tricount.com/tpKBmqdOUJDJUjBRcj" data-id="tricount">
-        <div class="ac-top">
-          <div class="ac-logo" id="logo-tricount">
-            <div class="ac-logo-placeholder">t</div>
+        <div class="action-card" data-link="https://tricount.com/tpKBmqdOUJDJUjBRcj" data-id="tricount">
+          <div class="ac-top">
+            <div class="ac-logo" id="logo-tricount"><div class="ac-logo-placeholder">t</div></div>
+            <button class="ac-dismiss" title="Cycle status">✕</button>
           </div>
-          <div style="display:flex;gap:6px;align-items:center;">
-            <div class="ac-status">✓</div>
-            <button class="ac-dismiss" data-id="tricount" title="Won't do">✕</button>
+          <div class="ac-body">
+            <div class="ac-title">Join the Tricount group</div>
+            <div class="ac-note">Split and track expenses with the group</div>
           </div>
+          <div class="ac-arrow">↗</div>
         </div>
-        <div class="ac-title">Join the Tricount group</div>
-        <div class="ac-note">Split and track expenses with the group</div>
-        <div class="ac-arrow">↗</div>
+
+        <div class="action-card" data-link="https://esim.holafly.com/esim-netherlands/?selectedDays=5&startDate=2026-06-04&endDate=2026-06-08" data-id="esim">
+          <div class="ac-top">
+            <div class="ac-logo" id="logo-esim"><div class="ac-logo-placeholder">e</div></div>
+            <button class="ac-dismiss" title="Cycle status">✕</button>
+          </div>
+          <div class="ac-body">
+            <div class="ac-title">Get an eSIM</div>
+            <div class="ac-note">Netherlands · 5 days · dates pre-selected</div>
+          </div>
+          <div class="ac-arrow">↗</div>
+        </div>
+
+        <div class="action-card" data-link="https://www.rijksmuseum.nl/en/tickets/articles" data-id="rijks">
+          <div class="ac-top">
+            <div class="ac-logo" id="logo-rijks"><div class="ac-logo-placeholder">r</div></div>
+            <button class="ac-dismiss" title="Cycle status">✕</button>
+          </div>
+          <div class="ac-body">
+            <div class="ac-title">Book Rijksmuseum tickets</div>
+            <div class="ac-note">Jun 5 · 11am · select "Museum Entrance" type</div>
+          </div>
+          <div class="ac-arrow">↗</div>
+        </div>
+
+        <div class="action-card" data-link="https://kanoensupamsterdam.nl/en/kayak-rental/" data-id="kayak">
+          <div class="ac-top">
+            <div class="ac-logo" id="logo-kayak"><div class="ac-logo-placeholder">k</div></div>
+            <button class="ac-dismiss" title="Cycle status">✕</button>
+          </div>
+          <div class="ac-body">
+            <div class="ac-title">Book kayak rental</div>
+            <div class="ac-note">Jun 6 · if the group is up for it</div>
+          </div>
+          <div class="ac-arrow">↗</div>
+        </div>
+
       </div>
 
-      <div class="action-card" data-link="https://esim.holafly.com/esim-netherlands/?selectedDays=5&startDate=2026-06-04&endDate=2026-06-08" data-id="esim">
-        <div class="ac-top">
-          <div class="ac-logo" id="logo-esim">
-            <div class="ac-logo-placeholder">e</div>
-          </div>
-          <div style="display:flex;gap:6px;align-items:center;">
-            <div class="ac-status">✓</div>
-            <button class="ac-dismiss" data-id="esim" title="Won't do">✕</button>
-          </div>
-        </div>
-        <div class="ac-title">Get an eSIM</div>
-        <div class="ac-note">Netherlands · 5 days · dates pre-selected</div>
-        <div class="ac-arrow">↗</div>
-      </div>
-
-      <div class="action-card" data-link="https://www.rijksmuseum.nl/en/tickets/articles" data-id="rijks">
-        <div class="ac-top">
-          <div class="ac-logo" id="logo-rijks">
-            <div class="ac-logo-placeholder">r</div>
-          </div>
-          <div style="display:flex;gap:6px;align-items:center;">
-            <div class="ac-status">✓</div>
-            <button class="ac-dismiss" data-id="rijks" title="Won't do">✕</button>
-          </div>
-        </div>
-        <div class="ac-title">Book Rijksmuseum tickets</div>
-        <div class="ac-note">Jun 5 · 11am · select "Museum Entrance" type</div>
-        <div class="ac-arrow">↗</div>
-      </div>
-
-      <div class="action-card" data-link="https://kanoensupamsterdam.nl/en/kayak-rental/" data-id="kayak">
-        <div class="ac-top">
-          <div class="ac-logo" id="logo-kayak">
-            <div class="ac-logo-placeholder">k</div>
-          </div>
-          <div style="display:flex;gap:6px;align-items:center;">
-            <div class="ac-status">✓</div>
-            <button class="ac-dismiss" data-id="kayak" title="Won't do">✕</button>
-          </div>
-        </div>
-        <div class="ac-title">Book kayak rental</div>
-        <div class="ac-note">Jun 6 · if the group is up for it</div>
-        <div class="ac-arrow">↗</div>
-      </div>
-
+      <!-- Mobile carousel counter + dots -->
+      <div class="carousel-counter" id="carouselCounter">1 / 4</div>
+      <div class="carousel-dots" id="carouselDots"></div>
     </div>
   </section>
 
   <script>
     /* ── ACTION CARDS ── */
     const cardStates = {};
+    const STATE_CYCLE = ['default', 'skip', 'done']; // ✕ cycles: unticked → red → green → unticked
 
     document.querySelectorAll('.action-card').forEach(card => {
       const id   = card.dataset.id;
       const link = card.dataset.link;
       cardStates[id] = 'default';
 
-      // Click dismiss button → toggle won't-do
-      const btn = card.querySelector('.ac-dismiss');
-      btn.addEventListener('click', function(e) {
+      function applyState(state) {
+        card.classList.remove('is-done', 'is-skip');
+        if (state === 'done') card.classList.add('is-done');
+        if (state === 'skip') card.classList.add('is-skip');
+        const btn = card.querySelector('.ac-dismiss');
+        btn.textContent = state === 'done' ? '✓' : state === 'skip' ? '✕' : '✕';
+      }
+
+      // ✕ button — cycles: default → red (skip) → green (done) → default
+      card.querySelector('.ac-dismiss').addEventListener('click', function(e) {
         e.stopPropagation();
-        if (cardStates[id] === 'skip') {
-          cardStates[id] = 'default';
-          card.classList.remove('is-skip');
-        } else {
-          cardStates[id] = 'skip';
-          card.classList.remove('is-done');
-          card.classList.add('is-skip');
-        }
+        const idx = STATE_CYCLE.indexOf(cardStates[id]);
+        cardStates[id] = STATE_CYCLE[(idx + 1) % STATE_CYCLE.length];
+        applyState(cardStates[id]);
       });
 
-      // Click card body → open link + toggle done
+      // Card body click — just opens link
       card.addEventListener('click', function() {
-        if (cardStates[id] === 'done') {
-          // Already done — reset
-          cardStates[id] = 'default';
-          card.classList.remove('is-done');
-        } else if (cardStates[id] === 'skip') {
-          // Skip state — click resets
-          cardStates[id] = 'default';
-          card.classList.remove('is-skip');
-        } else {
-          // Default — open link and mark done
-          if (link && link !== '#') window.open(link, '_blank');
-          cardStates[id] = 'done';
-          card.classList.remove('is-skip');
-          card.classList.add('is-done');
-        }
+        if (link && link !== '#') window.open(link, '_blank');
       });
     });
+
+    /* ── MOBILE CAROUSEL ── */
+    (function () {
+      const grid    = document.getElementById('actionCardsGrid');
+      const counter = document.getElementById('carouselCounter');
+      const dotsEl  = document.getElementById('carouselDots');
+      const cards   = Array.from(grid.querySelectorAll('.action-card'));
+      const total   = cards.length;
+      let current   = 0;
+      let startX    = 0;
+
+      // Build dots
+      cards.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsEl.appendChild(dot);
+      });
+
+      function goTo(idx) {
+        current = Math.max(0, Math.min(total - 1, idx));
+        const isMob = window.matchMedia('(max-width: 600px)').matches;
+        if (!isMob) return;
+        const cardW = grid.parentElement.offsetWidth + 12;
+        grid.style.transform = `translateX(-${current * cardW}px)`;
+        counter.textContent = (current + 1) + ' / ' + total;
+        dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === current);
+        });
+      }
+
+      // Touch swipe
+      grid.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      grid.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+      }, { passive: true });
+
+      // Re-calc on resize
+      window.addEventListener('resize', () => goTo(current));
+    })();
   </script>
 
   <!-- GAP -->
