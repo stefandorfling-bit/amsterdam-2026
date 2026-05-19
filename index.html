@@ -1517,65 +1517,19 @@
     }
 
     try {
-      // Step 1: discover correct host
-      const r1 = await fetch('https://p01-sharedstreams.icloud.com/' + TOKEN + '/sharedstreams/webstream', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: '{"streamCtag":null}'
-      });
-      let host, photos;
-      if (r1.ok) {
-        const j1 = await r1.json();
-        if (j1['X-Apple-MMe-Host']) {
-          // Redirect to correct host
-          const r2 = await fetch('https://' + j1['X-Apple-MMe-Host'] + '/' + TOKEN + '/sharedstreams/webstream', {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: '{"streamCtag":null}'
-          });
-          const j2 = await r2.json();
-          host   = j1['X-Apple-MMe-Host'];
-          photos = j2.photos || [];
-        } else {
-          host   = 'p01-sharedstreams.icloud.com';
-          photos = j1.photos || [];
-        }
-      } else { throw new Error('fetch failed'); }
+      // Call our server-side proxy to avoid CORS issues with iCloud API
+      const r = await fetch('/api/photos');
+      if (!r.ok) throw new Error('proxy failed');
+      const { urls } = await r.json();
 
-      if (!photos.length) {
+      if (!urls || !urls.length) {
         placeholder('Photos will appear here once the album has shots in it');
         return;
       }
 
-      // Step 2: pick latest 5
-      const latest = [...photos]
-        .sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated))
-        .slice(0, 5);
-
-      // Step 3: get asset URLs
-      const photoGuids = latest.map(p => {
-        const derivs = p.derivatives || {};
-        // Pick largest derivative ≤ 1280px
-        const key = Object.keys(derivs)
-          .filter(k => parseInt(k) <= 1280)
-          .sort((a, b) => parseInt(b) - parseInt(a))[0]
-          || Object.keys(derivs)[0];
-        return { photoGuid: p.photoGuid, derivativeInfo: derivs[key] };
-      });
-
-      const r3 = await fetch('https://' + host + '/' + TOKEN + '/sharedstreams/webasseturls', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ photoGuids: photoGuids.map(p => p.photoGuid) })
-      });
-      const j3 = await r3.json();
-      const items = j3.items || {};
-
-      // Step 4: render photos
+      // Render photos
       STRIP.innerHTML = '';
-      photoGuids.forEach(({ photoGuid }) => {
-        const item = items[photoGuid];
-        if (!item) return;
-        const loc  = item.url_location;
-        const path = item.url_path;
-        const url  = loc && path ? 'https://' + loc + path : null;
+      urls.forEach(url => {
         if (!url) return;
 
         const a = document.createElement('a');
