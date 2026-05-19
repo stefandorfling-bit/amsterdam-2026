@@ -1212,7 +1212,7 @@
       .bars-grid {
         display: block;
         position: relative;
-        height: 300px;
+        height: 340px;
         overflow: visible;
         border: none;
       }
@@ -1221,18 +1221,71 @@
         inset: 0;
         border-radius: 22px;
         border: none;
-        padding: 2rem 1.6rem;
+        padding: 2rem 1.8rem;
         will-change: transform;
         touch-action: pan-y;
-        box-shadow: 0 16px 40px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.9);
-        background: linear-gradient(150deg, #faf7f2 0%, #ede4d4 100%);
         cursor: grab;
         user-select: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 6px 16px rgba(0,0,0,0.25);
+        overflow: hidden;
       }
-      .bar-cell:nth-child(even) { background: linear-gradient(150deg, #f7f2ee 0%, #e8ddd0 100%); }
-      .bar-cell.is-club { background: linear-gradient(150deg, #f7eeee 0%, #edddd6 100%); }
-      .bar-name { font-size: 1.5rem; }
-      .bar-detail { font-size: 13px; margin-top: 0.5rem; }
+      /* Radial glow in top-left corner for depth */
+      .bar-cell::after {
+        content: '';
+        position: absolute;
+        top: -40px; left: -40px;
+        width: 200px; height: 200px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.07);
+        pointer-events: none;
+      }
+      /* Per-card venue colours */
+      .bar-cell:nth-child(1) { background: radial-gradient(ellipse at 20% 20%, #8c2252 0%, #3d0d20 100%); } /* Queen's Head — rose */
+      .bar-cell:nth-child(2) { background: radial-gradient(ellipse at 20% 20%, #4a2080 0%, #1a0a3a 100%); } /* Bar Taboo — indigo */
+      .bar-cell:nth-child(3) { background: radial-gradient(ellipse at 20% 20%, #1a3a80 0%, #090f2e 100%); } /* Bar Blend — deep blue */
+      .bar-cell:nth-child(4) { background: radial-gradient(ellipse at 20% 20%, #0d5c5c 0%, #031e1e 100%); } /* Blend XL — teal */
+      .bar-cell:nth-child(5) { background: radial-gradient(ellipse at 20% 20%, #5c0f99 0%, #200540 100%); } /* Club NYX — violet */
+      .bar-cell:nth-child(6) { background: radial-gradient(ellipse at 20% 20%, #8c1a3a 0%, #2e0510 100%); } /* Soho — dark rose */
+      .bar-cell:nth-child(7) { background: radial-gradient(ellipse at 20% 20%, #1a0a0a 0%, #0a0303 100%); } /* Club Church — near-black */
+
+      /* Bar type label → glass pill */
+      .bars-grid .bar-type-label {
+        display: inline-block;
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.25);
+        border-radius: 20px;
+        padding: 3px 10px;
+        font-size: 9px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.8);
+        margin-bottom: 0.6rem;
+        align-self: flex-start;
+      }
+      /* Large hero name */
+      .bars-grid .bar-name {
+        font-size: 2rem;
+        color: #fff;
+        margin-bottom: 0.5rem;
+        line-height: 1.1;
+        text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      }
+      .bars-grid .bar-cell.is-club .bar-name { color: #fff; }
+      .bars-grid .bar-detail {
+        font-size: 12.5px;
+        color: rgba(255,255,255,0.65);
+        margin-bottom: 0.8rem;
+        line-height: 1.55;
+      }
+      /* Map link on dark bg */
+      .bars-grid .bar-cell a {
+        color: rgba(255,255,255,0.75) !important;
+        border-bottom-color: rgba(255,255,255,0.4) !important;
+      }
+      /* Queen's Head calendar hint */
+      #queensheadCard > div:last-of-type { color: rgba(255,255,255,0.75) !important; }
       .bars-card-counter {
         text-align: center;
         margin-top: 1.2rem;
