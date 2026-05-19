@@ -635,6 +635,50 @@
     }
     .extra-icon { font-size: 13px; flex-shrink: 0; width: 18px; }
 
+    /* ── RAINY DAY ── */
+    .rainy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      min-height: 480px;
+    }
+    .rainy-video-panel {
+      position: relative;
+      overflow: hidden;
+      border-right: 0.5px solid var(--border);
+    }
+    .rain-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .rainy-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,10,5,0.65) 0%, rgba(15,10,5,0.1) 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+    }
+    .rainy-content-panel {
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 480px;
+    }
+
+    @media (max-width: 600px) {
+      .rainy-grid { grid-template-columns: 1fr; }
+      .rainy-video-panel { min-height: 280px; border-right: none; border-bottom: 0.5px solid var(--border); }
+      .rain-video { position: absolute; }
+      .rainy-content-panel { min-height: auto; padding: 2rem 1.5rem; border-left: none !important; border-top: 0.5px solid var(--border); }
+    }
+
     /* ── TRANSPORT ── */
     .transport-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
     .transport-steps { padding-right: 3rem; border-right: 0.5px solid var(--border); }
@@ -1537,16 +1581,7 @@
   <section id="extras" class="panel">
     <div class="extras-grid">
 
-      <div class="extra-col">
-        <div class="section-label">Rainy day</div>
-        <div class="section-heading" style="font-size:2rem; margin-bottom:0">Plan B ☔</div>
-        <ul class="extra-list">
-          <li><span class="extra-icon">🏬</span> Magna Plaza (mall)</li>
-          <li><span class="extra-icon">🌯</span> Foodhallen</li>
-          <li><span class="extra-icon">🖼️</span> Extra museums</li>
-          <li><span class="extra-icon">📸</span> STRAAT Museum</li>
-        </ul>
-      </div>
+      <!-- Rainy day moved to its own section below -->
 
       <div class="extra-col" id="food">
         <div class="section-label">Eat &amp; drink</div>
@@ -1563,6 +1598,37 @@
     </div>
   </section>
 
+  <!-- GAP -->
+  <div class="panel-gap"></div>
+
+  <!-- RAINY DAY PANEL -->
+  <section id="rainy" class="panel" style="padding: 0; overflow: hidden;">
+    <div class="rainy-grid">
+
+      <!-- Panel 1: Rain video -->
+      <div class="rainy-video-panel">
+        <video autoplay muted loop playsinline class="rain-video">
+          <source src="rain-compressed.mp4" type="video/mp4" />
+        </video>
+        <div class="rainy-video-overlay">
+          <div class="section-label" style="color:rgba(255,255,255,0.6);">If it rains</div>
+          <div class="section-heading" style="color:#fff; font-size:2.5rem; margin-bottom:0;">plan b ☔</div>
+        </div>
+      </div>
+
+      <!-- Panel 2: placeholder -->
+      <div class="rainy-content-panel">
+        <div style="color:var(--muted); font-size:12px; font-style:italic;">Coming soon…</div>
+      </div>
+
+      <!-- Panel 3: placeholder -->
+      <div class="rainy-content-panel" style="border-left: 0.5px solid var(--border);">
+        <div style="color:var(--muted); font-size:12px; font-style:italic;">Coming soon…</div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-left">Amsterdam, June 2026</div>
@@ -1572,6 +1638,11 @@
   <script>
     /* ── MOBILE VIDEO AUTOPLAY ── */
     window.addEventListener('load', function () {
+      // Autoplay all muted looping videos on mobile
+      document.querySelectorAll('video[autoplay]').forEach(function(v) {
+        v.muted = true;
+        v.play().catch(function() {});
+      });
       var v = document.getElementById('heroVideo');
       if (!v) return;
       v.muted = true;
