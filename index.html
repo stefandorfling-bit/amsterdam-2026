@@ -632,12 +632,16 @@
     .extra-icon { font-size: 13px; flex-shrink: 0; width: 18px; }
 
     /* ── ACTION CARDS ── */
-    .action-cards-wrap { position: relative; }
+    .action-cards-wrap {
+      display: flex;
+      justify-content: center; /* center cards on desktop */
+    }
     .action-cards-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 14px;
       max-width: 75%;
+      width: 75%;
     }
     .action-card {
       position: relative;
@@ -646,20 +650,18 @@
       -webkit-backdrop-filter: blur(24px) saturate(160%);
       border: 1px solid rgba(255,255,255,0.24);
       border-radius: 20px;
-      padding: 1.4rem 1.3rem 3.5rem;
+      aspect-ratio: 3 / 4;
+      display: flex;
+      flex-direction: column;
       cursor: pointer;
       transition: background 0.2s, border-color 0.2s, transform 0.2s;
       overflow: hidden;
       user-select: none;
-      aspect-ratio: 3 / 4;
-      display: flex;
-      flex-direction: column;
     }
     .action-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
+      top: 0; left: 0; right: 0; height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
     }
     .action-card:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.38); transform: translateY(-2px); }
@@ -668,49 +670,69 @@
     .action-card.is-skip { background: rgba(200,57,31,0.12); border-color: rgba(200,57,31,0.35); }
     .action-card.is-skip .ac-title { text-decoration: line-through; opacity: 0.6; }
 
-    .ac-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: auto; }
-    .ac-logo {
-      width: 52px; height: 52px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.25);
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden; flex-shrink: 0;
-    }
-    .ac-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 13px; }
-    .ac-logo-placeholder { font-family: var(--f-display); font-size: 1.5rem; color: rgba(255,255,255,0.55); text-transform: lowercase; }
+    /* Dismiss button — absolute top-right */
     .ac-dismiss {
-      width: 28px; height: 28px; border-radius: 50%;
+      position: absolute;
+      top: 0.9rem; right: 0.9rem;
+      width: 26px; height: 26px; border-radius: 50%;
       background: rgba(255,255,255,0.15);
       border: 1px solid rgba(255,255,255,0.25);
       color: rgba(255,255,255,0.7);
       font-size: 11px;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; flex-shrink: 0;
+      cursor: pointer;
       transition: background 0.15s, color 0.15s;
       padding: 0; line-height: 1;
+      z-index: 2;
     }
     .action-card.is-skip .ac-dismiss { background: rgba(200,57,31,0.6); border-color: rgba(200,57,31,0.4); color: white; }
     .action-card.is-done .ac-dismiss { background: rgba(60,180,80,0.6); border-color: rgba(60,180,80,0.4); color: white; }
 
-    .ac-body { margin-top: 2rem; }
-    .ac-title { font-family: var(--f-display); font-size: 1.05rem; font-weight: 400; color: #fff; text-transform: lowercase; line-height: 1.3; margin-bottom: 0.4rem; }
-    .ac-note { font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.55; }
-    .ac-arrow { position: absolute; bottom: 1.3rem; right: 1.3rem; font-size: 14px; color: rgba(255,255,255,0.4); transition: color 0.2s, transform 0.2s; }
+    /* Logo area — top 2/3 of card */
+    .ac-logo-area {
+      flex: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem 0.5rem;
+    }
+    .ac-logo {
+      width: 72px; height: 72px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .ac-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 17px; }
+    .ac-logo-placeholder { font-family: var(--f-display); font-size: 2rem; color: rgba(255,255,255,0.55); text-transform: lowercase; }
+
+    /* Text area — bottom 1/3 of card */
+    .ac-body {
+      flex: 1;
+      padding: 0.8rem 1.1rem 1rem;
+      border-top: 0.5px solid rgba(255,255,255,0.12);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .ac-title { font-family: var(--f-display); font-size: 0.95rem; font-weight: 400; color: #fff; text-transform: lowercase; line-height: 1.3; margin-bottom: 0.3rem; }
+    .ac-note { font-size: 10.5px; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.5; }
+    .ac-arrow { position: absolute; bottom: 1rem; right: 1rem; font-size: 13px; color: rgba(255,255,255,0.4); transition: color 0.2s, transform 0.2s; }
     .action-card:hover .ac-arrow { color: rgba(255,255,255,0.8); transform: translate(2px,-2px); }
     .action-card.is-done .ac-arrow, .action-card.is-skip .ac-arrow { opacity: 0; }
 
-    /* Mobile carousel */
+    /* Carousel — mobile only */
     .carousel-counter {
       display: none;
       text-align: center;
-      margin-top: 1.2rem;
+      margin-top: 1rem;
       font-family: var(--f-nav);
       font-size: 10px;
       letter-spacing: 2px;
       color: rgba(255,255,255,0.5);
     }
-    .carousel-dots { display: flex; justify-content: center; gap: 6px; margin-top: 0.6rem; }
+    .carousel-dots { display: none; justify-content: center; gap: 6px; margin-top: 0.6rem; }
     .carousel-dot {
       width: 6px; height: 6px; border-radius: 50%;
       background: rgba(255,255,255,0.3);
@@ -719,20 +741,28 @@
     .carousel-dot.active { background: #fff; transform: scale(1.3); }
 
     @media (max-width: 600px) {
-      .action-cards-wrap { overflow: hidden; }
+      .action-cards-wrap {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        display: block;
+      }
+      .action-cards-wrap::-webkit-scrollbar { display: none; }
       .action-cards-grid {
         display: flex;
-        transition: transform 0.35s cubic-bezier(.4,0,.2,1);
-        gap: 0;
-        will-change: transform;
+        gap: 12px;
+        width: max-content;
+        max-width: none;
+        padding: 0 calc((100vw - 75vw) / 2);
       }
       .action-card {
-        flex: 0 0 100%;
-        aspect-ratio: 3 / 4;
-        margin: 0 6px;
+        flex: 0 0 75vw;
         border-radius: 18px;
+        scroll-snap-align: center;
       }
       .carousel-counter { display: block; }
+      .carousel-dots { display: flex; }
     }
 
     /* ── FOOTER ── */
@@ -1342,9 +1372,9 @@
       <div class="action-cards-grid" id="actionCardsGrid">
 
         <div class="action-card" data-link="https://tricount.com/tpKBmqdOUJDJUjBRcj" data-id="tricount">
-          <div class="ac-top">
+          <button class="ac-dismiss" title="Cycle status">✕</button>
+          <div class="ac-logo-area">
             <div class="ac-logo" id="logo-tricount"><div class="ac-logo-placeholder">t</div></div>
-            <button class="ac-dismiss" title="Cycle status">✕</button>
           </div>
           <div class="ac-body">
             <div class="ac-title">Join the Tricount group</div>
@@ -1354,9 +1384,9 @@
         </div>
 
         <div class="action-card" data-link="https://esim.holafly.com/esim-netherlands/?selectedDays=5&startDate=2026-06-04&endDate=2026-06-08" data-id="esim">
-          <div class="ac-top">
+          <button class="ac-dismiss" title="Cycle status">✕</button>
+          <div class="ac-logo-area">
             <div class="ac-logo" id="logo-esim"><div class="ac-logo-placeholder">e</div></div>
-            <button class="ac-dismiss" title="Cycle status">✕</button>
           </div>
           <div class="ac-body">
             <div class="ac-title">Get an eSIM</div>
@@ -1366,9 +1396,9 @@
         </div>
 
         <div class="action-card" data-link="https://www.rijksmuseum.nl/en/tickets/articles" data-id="rijks">
-          <div class="ac-top">
+          <button class="ac-dismiss" title="Cycle status">✕</button>
+          <div class="ac-logo-area">
             <div class="ac-logo" id="logo-rijks"><div class="ac-logo-placeholder">r</div></div>
-            <button class="ac-dismiss" title="Cycle status">✕</button>
           </div>
           <div class="ac-body">
             <div class="ac-title">Book Rijksmuseum tickets</div>
@@ -1378,9 +1408,9 @@
         </div>
 
         <div class="action-card" data-link="https://kanoensupamsterdam.nl/en/kayak-rental/" data-id="kayak">
-          <div class="ac-top">
+          <button class="ac-dismiss" title="Cycle status">✕</button>
+          <div class="ac-logo-area">
             <div class="ac-logo" id="logo-kayak"><div class="ac-logo-placeholder">k</div></div>
-            <button class="ac-dismiss" title="Cycle status">✕</button>
           </div>
           <div class="ac-body">
             <div class="ac-title">Book kayak rental</div>
@@ -1429,45 +1459,42 @@
       });
     });
 
-    /* ── MOBILE CAROUSEL ── */
+    /* ── MOBILE CAROUSEL (scroll-snap based) ── */
     (function () {
+      const wrap    = document.getElementById('actionCardsWrap');
       const grid    = document.getElementById('actionCardsGrid');
       const counter = document.getElementById('carouselCounter');
       const dotsEl  = document.getElementById('carouselDots');
       const cards   = Array.from(grid.querySelectorAll('.action-card'));
       const total   = cards.length;
-      let current   = 0;
-      let startX    = 0;
 
       // Build dots
       cards.forEach((_, i) => {
         const dot = document.createElement('div');
         dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-        dot.addEventListener('click', () => goTo(i));
+        dot.addEventListener('click', () => {
+          cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        });
         dotsEl.appendChild(dot);
       });
 
-      function goTo(idx) {
-        current = Math.max(0, Math.min(total - 1, idx));
-        const isMob = window.matchMedia('(max-width: 600px)').matches;
-        if (!isMob) return;
-        const cardW = grid.parentElement.offsetWidth + 12;
-        grid.style.transform = `translateX(-${current * cardW}px)`;
-        counter.textContent = (current + 1) + ' / ' + total;
+      function updateCounter() {
+        if (!window.matchMedia('(max-width: 600px)').matches) return;
+        // Find which card is most centred in the wrap viewport
+        const wrapCentre = wrap.scrollLeft + wrap.offsetWidth / 2;
+        let closest = 0, minDist = Infinity;
+        cards.forEach((c, i) => {
+          const dist = Math.abs((c.offsetLeft + c.offsetWidth / 2) - wrapCentre);
+          if (dist < minDist) { minDist = dist; closest = i; }
+        });
+        counter.textContent = (closest + 1) + ' / ' + total;
         dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => {
-          d.classList.toggle('active', i === current);
+          d.classList.toggle('active', i === closest);
         });
       }
 
-      // Touch swipe
-      grid.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-      grid.addEventListener('touchend', e => {
-        const diff = startX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
-      }, { passive: true });
-
-      // Re-calc on resize
-      window.addEventListener('resize', () => goTo(current));
+      wrap.addEventListener('scroll', updateCounter, { passive: true });
+      updateCounter();
     })();
   </script>
 
