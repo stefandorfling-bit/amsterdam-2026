@@ -608,9 +608,8 @@
       padding: 1.8rem 1.5rem;
       border-right: 0.5px solid rgba(255,255,255,0.15);
       border-bottom: 0.5px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.07);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: linear-gradient(145deg, #f6f1e8 0%, #ede4d4 100%);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
     }
     .bar-type-label {
       font-size: 9px;
@@ -625,12 +624,12 @@
       font-style: normal;
       font-size: 1.35rem;
       font-weight: 600;
-      color: #fff;
+      color: var(--ink);
       margin-bottom: 0.4rem;
     }
-    .bar-type-label { color: rgba(255,255,255,0.55); }
-    .bar-detail { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.6; }
-    .bar-cell.is-club .bar-name { color: #fff; }
+    .bar-type-label { color: var(--muted); }
+    .bar-detail { font-size: 12px; font-weight: 300; color: var(--muted); line-height: 1.6; }
+    .bar-cell.is-club .bar-name { color: var(--red); }
 
     /* ── EXTRAS GRID ── */
     .extras-grid {
