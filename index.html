@@ -703,6 +703,7 @@
       object-fit: cover;
       object-position: center;
     }
+    .food-mobile-header { display: none; } /* hidden on desktop */
     .food-image-overlay {
       position: absolute;
       inset: 0;
@@ -736,6 +737,7 @@
         justify-content: flex-start;
         padding-top: 2rem;
       }
+      .food-mobile-header { display: block; }
       .food-options {
         position: relative;
         z-index: 2;
@@ -743,11 +745,12 @@
         min-height: 92svh;
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: space-between;
         padding: 1.5rem;
         gap: 10px;
         pointer-events: none;
       }
+      .food-mobile-header { pointer-events: none; }
       .food-content-panel {
         pointer-events: all;
         min-height: auto;
@@ -757,6 +760,7 @@
         border: none;
       }
       .food-content-panel--right { border-left: none; }
+      .food-mobile-cards { display: flex; flex-direction: column; gap: 10px; pointer-events: all; }
       .food-content-panel .rainy-card {
         background: rgba(255,255,255,0.14);
         backdrop-filter: blur(20px) saturate(160%);
@@ -1952,6 +1956,13 @@
       <!-- Panels 1 & 2: food cards -->
       <div class="food-options">
 
+        <!-- Mobile-only heading — mirrors rainy day -->
+        <div class="food-mobile-header">
+          <div class="section-label" style="color:rgba(255,255,255,0.6);">Eat &amp; drink</div>
+          <div class="section-heading" style="color:#fff; font-size:2.5rem; margin-bottom:0;">food options</div>
+        </div>
+
+        <div class="food-mobile-cards">
         <div class="food-content-panel">
           <div class="rainy-card">
             <div class="rainy-card-logo"><img src="zerozero.jpg" alt="Zero Zero" /></div>
@@ -1982,6 +1993,7 @@
             <div class="rainy-card-note">Famous apple pie — a must in Jordaan</div>
           </div>
         </div>
+        </div><!-- end food-mobile-cards -->
 
       </div>
 
