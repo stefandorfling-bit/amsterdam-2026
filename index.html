@@ -1134,6 +1134,15 @@
     <div class="section-label">Schiphol → Hotel</div>
     <div class="section-heading" style="margin-bottom: 2rem;">getting there</div>
 
+    <!-- Tap & pay note -->
+    <div style="display: inline-flex; align-items: center; gap: 10px; background: rgba(200,57,31,0.06); border: 0.5px solid rgba(200,57,31,0.25); padding: 0.75rem 1.2rem; margin-bottom: 2rem;">
+      <span style="font-size: 1.1rem;">📱</span>
+      <div>
+        <span style="font-size: 12.5px; font-weight: 400; color: var(--ink);">No tickets needed in advance — <strong style="font-weight:500;">tap and pay with your phone</strong> works on all trams, trains and buses.</span>
+        <span style="font-size: 11.5px; color: var(--muted); margin-left: 6px;">Contactless card or Apple/Google Pay accepted.</span>
+      </div>
+    </div>
+
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
 
       <!-- Steps column -->
@@ -1411,16 +1420,18 @@
     const DAYS = [
       {
         num: 3, weekday: 'Wednesday', title: 'Early Arrivals',
-        teaser: 'Flights land · Stefan arrives by train',
+        teaser: 'Steve arrives · Stefan arrives by train',
         acts: [
-          { e: '✈️', t: 'Sam, Sean, Gino, Victor &amp; Angelo fly in from IAD and ORD', s: 'Arrivals throughout the morning — settle into the hotel' },
-          { e: '🚂', t: '<strong>Stefan arrives</strong> — ICE240 from Berlin', s: 'Amsterdam Centraal · 11:59am' },
+          { e: '✈️', t: '<strong>Steve arrives</strong> — overnight flight from IAD lands this morning', s: 'KL652 · heads to Andaz Amsterdam Prinsengracht' },
+          { e: '🚂', t: '<strong>Stefan arrives</strong> — ICE240 from Berlin', s: 'Amsterdam Centraal · 11:59am · heads to Park Centraal Amsterdam' },
+          { e: '🛫', t: 'Sam, Sean, Gino, Victor &amp; Angelo depart from IAD &amp; ORD tonight', s: 'Overnight flights — they land in Amsterdam on June 4th' },
         ]
       },
       {
         num: 4, weekday: 'Thursday', title: 'First Full Day',
-        teaser: '9 Little Streets · Jordaan · Canal cruise 9pm',
+        teaser: 'Everyone lands · 9 Little Streets · Canal cruise 9pm',
         acts: [
+          { e: '✈️', t: 'Sam, Sean, Gino, Victor &amp; Angelo land in Amsterdam', s: 'Flights arrive throughout the morning — check in and freshen up' },
           { e: '🛍️', t: '<strong>9 Little Streets</strong> — group meetup', s: 'Bakkerij Wolf 🥐 · Shops · Photos 📸 · Fabel Friets 🍟 · Coffeeshop 🍃' },
           { e: '🏘️', t: '<strong>Jordaan</strong>', s: 'BunBun? · Winkel 43 🥧 · Anne Frank House (outside only)' },
           { e: '👑', t: '<strong>Central Amsterdam</strong>', s: 'Royal Palace · Dam Square · Hotel unwind · Dinner TBD' },
