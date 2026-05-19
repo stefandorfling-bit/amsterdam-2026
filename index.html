@@ -1017,6 +1017,7 @@
     .card-esim      { background: rgba(180,15,60,0.28);  border-color: rgba(180,15,60,0.45); }
     .card-rijks     { background: rgba(70,165,166,0.30); border-color: rgba(70,165,166,0.48); }
     .card-canoe     { background: rgba(210,95,10,0.28);  border-color: rgba(210,95,10,0.45); }
+    .card-photos    { background: rgba(36,120,210,0.28); border-color: rgba(36,120,210,0.45); }
     .action-card.is-skip .ac-title { text-decoration: line-through; opacity: 0.6; }
 
     /* Dismiss button — absolute top-right */
@@ -1358,7 +1359,6 @@
       <a href="#transport">Getting there</a>
       <a href="#actions">To-do</a>
       <a href="#food">Food</a>
-      <a href="https://www.icloud.com/sharedalbum/#B2e5n8hH4Ivqjui" target="_blank" style="color: var(--red); opacity: 1;">📸 Photos</a>
     </div>
   </nav>
 
@@ -1471,36 +1471,11 @@
     </div>
   </section>
 
-  <!-- GAP -->
-  <div class="panel-gap"></div>
-
-  <!-- PHOTOS PANEL -->
-  <section id="photos" class="panel">
-    <div class="section-label">Shared album</div>
-    <div class="section-heading" style="margin-bottom: 0.5rem;">the photos</div>
-    <p style="font-size: 13px; font-weight: 300; color: var(--muted); margin-bottom: 2rem; font-family: var(--f-body);">Add your shots from the trip — everyone can view and contribute.</p>
-
-    <!-- Photo strip -->
-    <div id="photoStrip" style="display: flex; gap: 10px; margin-bottom: 2rem; min-height: 160px; align-items: stretch;">
-      <!-- Populated by JS; falls back to placeholder -->
-    </div>
-
-    <a href="https://www.icloud.com/sharedalbum/#B2e5n8hH4Ivqjui" target="_blank" style="
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      font-family: var(--f-nav); font-size: 10px; letter-spacing: 2.5px;
-      text-transform: uppercase; color: var(--cream); background: var(--red);
-      text-decoration: none; padding: 0.85rem 2rem; transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
-      box-shadow: 0 6px 18px rgba(200,57,31,0.38), 0 2px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.15);
-    " onmouseover="this.style.background='#a82e18';this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 26px rgba(200,57,31,0.45), 0 3px 8px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.15)'" onmouseout="this.style.background='var(--red)';this.style.transform='';this.style.boxShadow='0 6px 18px rgba(200,57,31,0.38), 0 2px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.15)'">
-      📸 &nbsp; Open shared album
-    </a>
-  </section>
-
   <script>
   (async () => {
     const TOKEN   = 'B2e5n8hH4Ivqjui';
-    const STRIP   = document.getElementById('photoStrip');
-    const ALBUM   = 'https://www.icloud.com/sharedalbum/#' + TOKEN;
+    // Photos section removed — album linked from action card instead
+    return;
 
     function placeholder(msg) {
       STRIP.innerHTML = `
@@ -1855,10 +1830,22 @@
           <div class="ac-arrow">↗</div>
         </div>
 
+        <div class="action-card card-photos" data-link="https://www.icloud.com/sharedalbum/#B2e5n8hH4Ivqjui" data-id="photos">
+          <button class="ac-dismiss" title="Cycle status">✕</button>
+          <div class="ac-logo-area">
+            <div class="ac-logo" id="logo-photos"><img src="iphone.jpg" alt="iCloud Shared Album" /></div>
+          </div>
+          <div class="ac-body">
+            <div class="ac-title">Join the shared album</div>
+            <div class="ac-note">Add your photos of the trip</div>
+          </div>
+          <div class="ac-arrow">↗</div>
+        </div>
+
       </div>
 
       <!-- Mobile carousel counter + dots -->
-      <div class="carousel-counter" id="carouselCounter">1 / 4</div>
+      <div class="carousel-counter" id="carouselCounter">1 / 5</div>
       <div class="carousel-dots" id="carouselDots"></div>
     </div>
   </section>
@@ -1916,11 +1903,13 @@
 
       function updateCounter() {
         if (!window.matchMedia('(max-width: 600px)').matches) return;
-        // Find which card is most centred in the wrap viewport
-        const wrapCentre = wrap.scrollLeft + wrap.offsetWidth / 2;
+        // Use getBoundingClientRect for accurate visual centre position
+        const wrapRect = wrap.getBoundingClientRect();
+        const wrapCentre = wrapRect.left + wrapRect.width / 2;
         let closest = 0, minDist = Infinity;
         cards.forEach((c, i) => {
-          const dist = Math.abs((c.offsetLeft + c.offsetWidth / 2) - wrapCentre);
+          const r = c.getBoundingClientRect();
+          const dist = Math.abs((r.left + r.width / 2) - wrapCentre);
           if (dist < minDist) { minDist = dist; closest = i; }
         });
         counter.textContent = (closest + 1) + ' / ' + total;
