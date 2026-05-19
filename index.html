@@ -635,6 +635,23 @@
     }
     .extra-icon { font-size: 13px; flex-shrink: 0; width: 18px; }
 
+    /* ── TRANSPORT ── */
+    .transport-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .transport-steps { padding-right: 3rem; border-right: 0.5px solid var(--border); }
+    .transport-steve { padding-left: 3rem; }
+
+    @media (max-width: 600px) {
+      .transport-grid { grid-template-columns: 1fr; }
+      .transport-steps {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 0.5px solid var(--border);
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
+      }
+      .transport-steve { padding-left: 0; }
+    }
+
     /* ── ACTION CARDS ── */
     .action-cards-wrap {
       display: flex;
@@ -1292,10 +1309,10 @@
       </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
+    <div class="transport-grid">
 
       <!-- Steps column -->
-      <div style="padding-right: 3rem; border-right: 0.5px solid var(--border);">
+      <div class="transport-steps">
         <div style="font-family: var(--f-nav); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem;">Everyone</div>
 
         <div style="display: flex; flex-direction: column; gap: 0;">
@@ -1353,7 +1370,7 @@
       </div>
 
       <!-- Steve's note column -->
-      <div style="padding-left: 3rem;">
+      <div class="transport-steve">
         <div style="font-family: var(--f-nav); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 1.2rem;">Steve — special note</div>
         <div style="background: rgba(200,57,31,0.05); border: 0.5px solid rgba(200,57,31,0.2); padding: 1.4rem 1.5rem;">
           <div style="font-family: var(--f-display); font-size: 1.2rem; font-weight: 400; color: var(--ink); text-transform: lowercase; margin-bottom: 1rem;">steve's stop depends on the tram</div>
