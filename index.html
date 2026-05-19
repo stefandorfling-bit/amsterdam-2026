@@ -2204,6 +2204,8 @@
       renderModal();
       backdrop.classList.add('open');
       modal.scrollTop = 0;
+      // Birthday confetti for June 5 (Sean) and June 6 (Victor)
+      if (DAYS[idx].avatar) spawnFullScreenConfetti();
     }
 
     function renderModal() {
