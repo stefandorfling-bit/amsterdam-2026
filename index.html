@@ -1590,10 +1590,11 @@
     <div class="section-label">After dark</div>
     <div class="section-heading">Gay bars + clubs</div>
     <div class="bars-grid">
-      <div class="bar-cell">
+      <div class="bar-cell" id="queensheadCard" style="cursor:pointer;" onclick="document.getElementById('queensheadLightbox').classList.add('open')">
         <div class="bar-type-label">Bar</div>
         <div class="bar-name">The Queen's Head</div>
         <div class="bar-detail">Drag shows Thursdays. A classic.</div>
+        <div style="font-family:var(--f-nav);font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-top:0.8rem;display:inline-flex;align-items:center;gap:5px;">📅 View event calendar</div>
         <a href="https://share.google/zOFHd2kslHd6GLkFK" target="_blank" style="
           display: inline-flex; align-items: center; gap: 6px;
           margin-top: 0.8rem;
@@ -2297,6 +2298,47 @@
     // ESC key
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
   </script>
+  <!-- QUEEN'S HEAD LIGHTBOX -->
+  <div id="queensheadLightbox" style="
+    display: none;
+    position: fixed; inset: 0; z-index: 9000;
+    background: rgba(10,8,5,0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    cursor: zoom-out;
+  " onclick="this.classList.remove('open')">
+    <div style="position:relative; max-width:560px; width:100%; cursor:default;" onclick="event.stopPropagation()">
+      <img src="queenshead.jpg" alt="The Queen's Head calendar" style="
+        width: 100%;
+        border-radius: 16px;
+        display: block;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+      " />
+      <button onclick="document.getElementById('queensheadLightbox').classList.remove('open')" style="
+        position: absolute;
+        top: -14px; right: -14px;
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        background: var(--cream);
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        color: var(--ink);
+        font-family: var(--f-body);
+      ">✕</button>
+    </div>
+  </div>
+
+  <style>
+    #queensheadLightbox { display: none; }
+    #queensheadLightbox.open { display: flex; }
+  </style>
+
   <script>
   /* ── BARS CARD STACK (mobile only) ── */
   (function () {
