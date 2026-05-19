@@ -435,6 +435,33 @@
       margin-top: 0.45rem;
       line-height: 1.5;
     }
+    /* Birthday avatar on day card */
+    .dc-avatar {
+      position: absolute;
+      top: 0.8rem;
+      right: 0.8rem;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 2px solid rgba(255,255,255,0.8);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    /* Birthday avatar in modal header */
+    .dm-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 2px solid rgba(255,255,255,0.8);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      margin-left: 0.8rem;
+      flex-shrink: 0;
+      align-self: center;
+    }
+
     .dc-arrow {
       position: absolute;
       bottom: 1rem;
@@ -2094,6 +2121,7 @@
       },
       {
         num: 5, weekday: 'Friday', title: "Sean's Birthday 🎂",
+        avatar: 'sean.jpeg',
         teaser: 'Rijksmuseum · De Pijp · Champagne',
         acts: [
           { e: '🖼️', t: '<strong>11:00am — Rijksmuseum</strong> <a href="https://www.rijksmuseum.nl/en/tickets/articles" target="_blank" class="pill pill-todo" style="text-decoration:none;">Book tickets ↗</a>', s: 'Select "Museum Entrance" ticket type' },
@@ -2105,6 +2133,7 @@
       },
       {
         num: 6, weekday: 'Saturday', title: "Vic's Birthday 🎂",
+        avatar: 'victor.jpeg',
         teaser: 'Markets · Museum · Vondelpark sunset',
         acts: [
           { e: '☀️', t: '<strong>Morning markets</strong>', s: 'Lindegracht Markt — food + flowers, Sat only · Noordermarkt — lifestyle + vintage' },
@@ -2151,6 +2180,7 @@
         <div class="dc-title">${day.title}</div>
         <div class="dc-teaser">${day.teaser}</div>
         <div class="dc-arrow">→</div>
+        ${day.avatar ? `<img src="${day.avatar}" class="dc-avatar" alt="" />` : ''}
       `;
       card.addEventListener('click', () => openDay(i));
       cardsEl.appendChild(card);
@@ -2183,6 +2213,19 @@
       dmTitle.textContent = day.title;
       dmPrev.disabled = currentIdx === 0;
       dmNext.disabled = currentIdx === DAYS.length - 1;
+
+      // Avatar in modal header
+      const existing = document.getElementById('dmAvatar');
+      if (existing) existing.remove();
+      if (day.avatar) {
+        const av = document.createElement('img');
+        av.src = day.avatar;
+        av.id = 'dmAvatar';
+        av.className = 'dm-avatar';
+        av.alt = '';
+        document.querySelector('.dm-date-block').appendChild(av);
+      }
+
       dmBody.innerHTML = day.acts.map(a => `
         <div class="act">
           <span class="act-emoji">${a.e}</span>
