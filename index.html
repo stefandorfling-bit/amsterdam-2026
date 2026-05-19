@@ -1306,22 +1306,23 @@
         font-family: var(--f-nav);
         font-size: 10px;
         letter-spacing: 2px;
-        color: var(--muted);
+        color: rgba(255,255,255,0.6);
       }
       .bars-card-dots {
         display: flex;
         justify-content: center;
-        gap: 5px;
-        margin-top: 0.5rem;
+        gap: 6px;
+        margin-top: 0.6rem;
       }
       .bars-card-dot {
-        width: 5px; height: 5px;
+        width: 6px; height: 6px;
         border-radius: 50%;
-        background: rgba(140,128,112,0.3);
+        background: rgba(255,255,255,0.3);
+        cursor: pointer;
         transition: background 0.2s, transform 0.2s;
       }
       .bars-card-dot.active {
-        background: var(--red);
+        background: #fff;
         transform: scale(1.3);
       }
 
