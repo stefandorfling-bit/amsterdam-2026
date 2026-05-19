@@ -703,6 +703,7 @@
       object-position: center;
     }
     .food-mobile-header { display: none; } /* hidden on desktop */
+    .food-mobile-cards { display: contents; } /* transparent to grid on desktop */
     .food-image-overlay {
       position: absolute;
       inset: 0;
@@ -737,6 +738,9 @@
         padding-top: 2rem;
       }
       .food-mobile-header { display: block; }
+      /* Hide the overlay headings on mobile — food-mobile-header takes over */
+      .food-image-overlay .section-label,
+      .food-image-overlay .section-heading { display: none; }
       .food-options {
         position: relative;
         z-index: 2;
@@ -759,13 +763,13 @@
         border: none;
       }
       .food-content-panel--right { border-left: none; }
-      .food-mobile-cards { display: flex; flex-direction: column; gap: 10px; pointer-events: all; }
+      .food-mobile-cards { display: flex; flex-direction: column; gap: 10px; pointer-events: all; width: 100%; }
       .food-content-panel .rainy-card {
         background: rgba(255,255,255,0.14);
         backdrop-filter: blur(20px) saturate(160%);
         -webkit-backdrop-filter: blur(20px) saturate(160%);
-        border: 1px solid rgba(255,255,255,0.22);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.25);
+        border: none;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.22);
       }
       .food-content-panel .rainy-card-title { color: #fff; }
       .food-content-panel .rainy-card-note { color: rgba(255,255,255,0.6); }
