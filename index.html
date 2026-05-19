@@ -638,8 +638,12 @@
     /* ── RAINY DAY ── */
     .rainy-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 2fr; /* video | two content panels */
       min-height: 480px;
+    }
+    .rainy-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
     .rainy-video-panel {
       position: relative;
@@ -657,7 +661,7 @@
     .rainy-video-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(15,10,5,0.65) 0%, rgba(15,10,5,0.1) 60%);
+      background: linear-gradient(to top, rgba(15,10,5,0.7) 0%, rgba(15,10,5,0.1) 55%);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -671,12 +675,67 @@
       align-items: center;
       min-height: 480px;
     }
+    .rainy-content-panel--right {
+      border-left: 0.5px solid var(--border);
+    }
 
+    /* Mobile: video fills full section, glass cards float on top */
     @media (max-width: 600px) {
-      .rainy-grid { grid-template-columns: 1fr; }
-      .rainy-video-panel { min-height: 280px; border-right: none; border-bottom: 0.5px solid var(--border); }
-      .rain-video { position: absolute; }
-      .rainy-content-panel { min-height: auto; padding: 2rem 1.5rem; border-left: none !important; border-top: 0.5px solid var(--border); }
+      .rainy-grid {
+        grid-template-columns: 1fr;
+        position: relative;
+        min-height: 92svh;
+      }
+      .rainy-video-panel {
+        position: absolute;
+        inset: 0;
+        border-right: none;
+      }
+      .rainy-video-overlay {
+        background: linear-gradient(
+          to top,
+          rgba(10,8,5,0.82) 0%,
+          rgba(10,8,5,0.15) 55%,
+          rgba(10,8,5,0.0) 100%
+        );
+      }
+      .rainy-options {
+        position: relative;
+        z-index: 2;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 1.5rem;
+        margin-top: auto;
+        /* Push cards to bottom of the section */
+        align-self: end;
+        min-height: 92svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        pointer-events: none;
+      }
+      .rainy-content-panel {
+        pointer-events: all;
+        min-height: auto;
+        padding: 1.5rem;
+        align-items: flex-start;
+        background: rgba(255,255,255,0.12);
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 18px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
+      }
+      .rainy-content-panel::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        border-radius: 18px 18px 0 0;
+      }
+      .rainy-content-panel { position: relative; }
+      .rainy-content-panel--right { border-left: none; }
     }
 
     /* ── TRANSPORT ── */
@@ -1616,14 +1675,17 @@
         </div>
       </div>
 
-      <!-- Panel 2: placeholder -->
-      <div class="rainy-content-panel">
-        <div style="color:var(--muted); font-size:12px; font-style:italic;">Coming soon…</div>
-      </div>
+      <!-- Panels 2 & 3 wrapped so mobile can overlay them as glass cards -->
+      <div class="rainy-options">
 
-      <!-- Panel 3: placeholder -->
-      <div class="rainy-content-panel" style="border-left: 0.5px solid var(--border);">
-        <div style="color:var(--muted); font-size:12px; font-style:italic;">Coming soon…</div>
+        <div class="rainy-content-panel">
+          <div style="color:var(--muted); font-size:12px; font-style:italic;">Coming soon…</div>
+        </div>
+
+        <div class="rainy-content-panel rainy-content-panel--right">
+          <div style="color:var(--muted); font-size:12px; font-style:italic;">Coming soon…</div>
+        </div>
+
       </div>
 
     </div>
